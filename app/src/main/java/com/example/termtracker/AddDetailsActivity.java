@@ -31,25 +31,24 @@ public class AddDetailsActivity extends AppCompatActivity {
 
             switch (value) {
                 case "note":
-                    //set up the layout for this type
                     Toast.makeText(getApplicationContext(), "passed note into addDetails", Toast.LENGTH_SHORT).show();
                     ab.setTitle("New Note");
-                    setCurrentFragment(new AddNoteFragment());//debug
-
+                    setCurrentFragment(new AddNoteFragment());
                     break;
                 case "assessment":
                     Toast.makeText(getApplicationContext(), "passed assessment into addDetails", Toast.LENGTH_SHORT).show();
                     ab.setTitle("New Assessment");
+                    setCurrentFragment(new AddAssessmentFragment());
                     break;
                 case "course":
                     Toast.makeText(getApplicationContext(), "passed course into addDetails", Toast.LENGTH_SHORT).show();
                     ab.setTitle("New Course");
+                    setCurrentFragment(new AddCourseFragment());
                     break;
                 case "term":
                     Toast.makeText(getApplicationContext(), "passed term into addDetails", Toast.LENGTH_SHORT).show();
                     ab.setTitle("New Term");
-                    Fragment fragment = new AddTermFragment();
-                    setCurrentFragment(fragment);
+                    setCurrentFragment(new AddTermFragment());
                     break;
             }
         }
