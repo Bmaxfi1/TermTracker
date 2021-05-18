@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/cancel_button"
+        android:icon="@drawable/ic_cancel"
+        android:title="Cancel"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/confirm_button"
+        android:icon="@drawable/ic_baseline_check_24"
+        android:title="Confirm"
+        app:showAsAction="always" />
+</menu>
