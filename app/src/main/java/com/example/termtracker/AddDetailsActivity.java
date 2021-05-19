@@ -3,15 +3,29 @@ package com.example.termtracker;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddDetailsActivity extends AppCompatActivity {
+import com.example.termtracker.Data.DatabaseHelper;
+import com.example.termtracker.Misc.DatePickerFragment;
+import com.example.termtracker.Model.Term;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class AddDetailsActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +85,54 @@ public class AddDetailsActivity extends AppCompatActivity {
         // Display menu item's title by using a Toast.
         //todo functionality to these buttons
         if (id == R.id.confirm_button) {
-            Toast.makeText(getApplicationContext(), "Confirm", Toast.LENGTH_SHORT).show();
+            Bundle bundle = getIntent().getExtras(); //getting the passed in key/value pairs
+            if (bundle != null) {
+                String value = bundle.getString("type");
+
+                switch (value) {
+                    case "note":
+                        Toast.makeText(getApplicationContext(), "note confirm clicked", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "assessment":
+                        Toast.makeText(getApplicationContext(), "assessment confirm clicked", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "course":
+                        Toast.makeText(getApplicationContext(), "course confirm clicked", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "term":
+                        Toast.makeText(getApplicationContext(), "term confirm clicked", Toast.LENGTH_SHORT).show();
+
+
+                        EditText titleEditText = (EditText)findViewById(R.id.termName);
+                        EditText startEditText = (EditText)findViewById(R.id.startDate);
+                        EditText endEditText = (EditText)findViewById(R.id.endDate);
+
+                        Term termToAdd = new Term(titleEditText.getText().toString(),
+                                startEditText.toString(),
+                                endEditText.getText().toString(),
+                                false,
+                                false,
+                                true);
+                        if (termToAdd.isValid()) {
+                            DatabaseHelper databaseHelper;
+                            databaseHelper = new DatabaseHelper(this);
+                            long idReturned = databaseHelper.addTerm(termToAdd);
+                            if (idReturned < 0) {
+                                Toast.makeText(getApplicationContext(), "Something went wrong with the query.  Term not added.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Term Added.  ID: " + idReturned, Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(this, MainActivity.class);
+                                startActivity(intent);
+                            }
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Validation failed.  Check your entries.", Toast.LENGTH_SHORT).show();
+
+                        }
+                        break;
+                }
+            }
             return true;
         } else if (id == R.id.cancel_button) {
             Toast.makeText(getApplicationContext(), "Cancel", Toast.LENGTH_SHORT).show();
