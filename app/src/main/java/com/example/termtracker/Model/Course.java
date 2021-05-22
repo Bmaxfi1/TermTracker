@@ -8,8 +8,8 @@ public class Course extends ScheduledItem implements Validatable{
     private ArrayList<Assessment> assessments;
     private ArrayList<Note> notes;
 
-    public Course(String title, String startDate, String endDate, boolean completed, boolean canBeCheckedOff, boolean canBeDeleted) {
-        super(title, startDate, endDate, completed, canBeCheckedOff, canBeDeleted);
+    public Course(int id, String title, String startDate, String endDate, boolean completed, boolean canBeCheckedOff, boolean canBeDeleted) {
+        super(id, title, startDate, endDate, completed, canBeDeleted);
     }
 
     @Override

@@ -1,22 +1,20 @@
 package com.example.termtracker.Model;
 
-import java.time.LocalDate;
-
 public abstract class ScheduledItem {
+    private int id;
     private String title;
     private String startDate;
     private String endDate;
     private boolean completed;
-    private boolean canBeCheckedOff;
-    private boolean canBeDeleted;
+    private boolean deletable;
 
-    public ScheduledItem(String title, String startDate, String endDate, boolean completed, boolean canBeCheckedOff, boolean canBeDeleted) {
+    public ScheduledItem(int id, String title, String startDate, String endDate, boolean completed, boolean deletable) {
+        this.id = id;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.completed = completed;
-        this.canBeCheckedOff = canBeCheckedOff;
-        this.canBeDeleted = canBeDeleted;
+        this.deletable = deletable;
     }
 
     public String getTitle() {
@@ -51,19 +49,19 @@ public abstract class ScheduledItem {
         this.completed = completed;
     }
 
-    public boolean isCanBeCheckedOff() {
-        return canBeCheckedOff;
+    public boolean isDeletable() {
+        return deletable;
     }
 
-    public void setCanBeCheckedOff(boolean canBeCheckedOff) {
-        this.canBeCheckedOff = canBeCheckedOff;
+    public void setDeletable(boolean deletable) {
+        this.deletable = deletable;
     }
 
-    public boolean isCanBeDeleted() {
-        return canBeDeleted;
+    public int getId() {
+        return id;
     }
 
-    public void setCanBeDeleted(boolean canBeDeleted) {
-        this.canBeDeleted = canBeDeleted;
+    public void setId(int id) {
+        this.id = id;
     }
 }

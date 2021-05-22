@@ -1,62 +1,24 @@
 package com.example.termtracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddTermFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class AddTermFragment extends Fragment {
+import com.example.termtracker.Data.DatabaseHelper;
+import com.example.termtracker.Misc.ImplementDatePickerDialog;
+import com.example.termtracker.Model.CanBeAddedToDatabase;
+import com.example.termtracker.Model.Term;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AddTermFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddTermFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AddTermFragment newInstance(String param1, String param2) {
-        AddTermFragment fragment = new AddTermFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-
-
-    }
+public class AddTermFragment extends Fragment implements CanBeAddedToDatabase {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +27,52 @@ public class AddTermFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_add_term, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        EditText startEditText = (EditText) view.findViewById(R.id.startDate);
+        ImplementDatePickerDialog.assign(view, startEditText);
+
+        EditText endEditText = (EditText) view.findViewById(R.id.endDate);
+        ImplementDatePickerDialog.assign(view, endEditText);
+    }
 
 
+
+    @Override
+    public void addNewItem() {
+        View view = getView();
+        EditText titleEditText = (EditText) view.findViewById(R.id.termName);
+        EditText startEditText = (EditText) view.findViewById(R.id.startDate);
+        EditText endEditText = (EditText) view.findViewById(R.id.endDate);
+
+        String parsedStartDate = startEditText.getText().toString().replaceAll("[^0-9.]", "");
+        String parsedEndDate = endEditText.getText().toString().replaceAll("[^0-9.]", "");
+
+
+        Term termToAdd = new Term(-1,
+                titleEditText.getText().toString(),
+                parsedStartDate,
+                parsedEndDate,
+                false,
+                true);
+        if (termToAdd.isValid()) {
+            DatabaseHelper databaseHelper;
+            databaseHelper = new DatabaseHelper(view.getContext());
+            long idReturned = databaseHelper.addTerm(termToAdd);
+            if (idReturned < 0) {
+                Toast.makeText(view.getContext(), "Something went wrong with the query.  Term not added.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(view.getContext(), "Term Added.  ID: " + idReturned, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        } else {
+            Toast.makeText(view.getContext(), "Validation failed.  Check your entries.", Toast.LENGTH_SHORT).show();
+
+        }
+
+
+    }
 }

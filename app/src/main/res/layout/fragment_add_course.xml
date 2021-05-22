@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="wrap_content">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddCourseFragment" >
+    tools:context=".AddCourseFragment">
 
     <TextView
         android:id="@+id/textView15"
@@ -24,7 +27,6 @@
         android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -39,13 +41,17 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
 
     <EditText
-        android:id="@+id/editTextDate3"
+        android:id="@+id/course_start_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="date"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
@@ -57,16 +63,20 @@
         android:layout_marginTop="24dp"
         android:text="End Date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate3" />
+        app:layout_constraintTop_toBottomOf="@+id/course_start_date" />
 
     <EditText
-        android:id="@+id/editTextDate4"
+        android:id="@+id/course_end_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="date"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
@@ -78,6 +88,35 @@
         android:layout_marginTop="24dp"
         android:text="Instructors"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate4" />
+        app:layout_constraintTop_toBottomOf="@+id/course_end_date" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/instructorsRecyclerView"
+        android:layout_width="363dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:isScrollContainer="false"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_new_instructor_button" />
+
+    <Button
+        android:id="@+id/add_new_instructor_button"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:text="Add New Instructor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
