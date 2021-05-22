@@ -27,6 +27,7 @@ import com.example.termtracker.Model.CourseInstructor;
 import com.example.termtracker.Model.Term;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import Adapters.InstructorsRecyclerviewAdapter;
@@ -70,7 +71,13 @@ public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase,
         Spinner termSpinner = view.findViewById(R.id.term_spinner);
         DatabaseHelper databaseHelper = new DatabaseHelper(view.getContext());
         List<Term> allTerms = databaseHelper.getAllTerms();
-        ArrayAdapter<Term> termArrayAdapter = new ArrayAdapter<Term>(view.getContext(), R.layout.drop_down_item, R.id.drop_down_item_textview, allTerms);
+        List<String> allTermsAsString = new ArrayList<>();  //need to turn object list into string list
+        for (Term term: allTerms) {
+            allTermsAsString.add(term.getTitle());
+        }
+        Collections.reverse(allTermsAsString); //this is done to show the most recent term at the top
+
+        ArrayAdapter<String> termArrayAdapter = new ArrayAdapter<String>(view.getContext(), R.layout.drop_down_item, R.id.drop_down_item_textview, allTermsAsString);
         termSpinner.setAdapter(termArrayAdapter);
 
         //recyclerview stuff
@@ -83,20 +90,15 @@ public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase,
 
 
         //add new instructor button pressed/Dialog stuff
-//        InstructorDetailsDialog dialog = new InstructorDetailsDialog(getActivity());
         Button addInstructorButton = (Button) view.findViewById(R.id.add_new_instructor_button);
         addInstructorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showNewInstructorDialog();
-
-
             }
         });
-
-
-
     }
+
     private void showNewInstructorDialog() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         InstructorDetailsDialogFragment instructorDetailsDialogFragment = InstructorDetailsDialogFragment.newInstance("New Instructor");
