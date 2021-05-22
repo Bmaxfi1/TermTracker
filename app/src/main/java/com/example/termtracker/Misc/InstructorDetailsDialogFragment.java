@@ -30,7 +30,7 @@ public class InstructorDetailsDialogFragment extends DialogFragment implements V
                 name.getText().toString(), phone.getText().toString(), email.getText().toString()
         );
 
-        if (courseInstructor.isValid()) {
+        if (courseInstructor.isValid(getContext())) {
 
             InstructorDetailsDialogFragmentListener listener = (InstructorDetailsDialogFragmentListener) getTargetFragment(); //cast exception
             listener.onSaveInstructor(name.getText().toString(), phone.getText().toString(), email.getText().toString());

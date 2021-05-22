@@ -88,7 +88,7 @@
         android:layout_marginTop="24dp"
         android:text="Instructors"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/course_end_date" />
+        app:layout_constraintTop_toBottomOf="@+id/term_spinner" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/instructorsRecyclerView"
@@ -117,6 +117,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+    <TextView
+        android:id="@+id/textview321321321"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Term"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/course_end_date" />
+
+    <Spinner
+        android:id="@+id/term_spinner"
+        android:layout_width="210dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:dropDownWidth="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview321321321" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

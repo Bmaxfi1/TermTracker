@@ -13,16 +13,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.termtracker.Data.DatabaseHelper;
 import com.example.termtracker.Misc.ImplementDatePickerDialog;
 import com.example.termtracker.Misc.InstructorDetailsDialogFragment;
 import com.example.termtracker.Model.CanBeAddedToDatabase;
 import com.example.termtracker.Model.CourseInstructor;
+import com.example.termtracker.Model.Term;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Adapters.InstructorsRecyclerviewAdapter;
 
@@ -60,6 +65,13 @@ public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase,
 
         EditText endEditText = (EditText) view.findViewById(R.id.course_end_date);
         ImplementDatePickerDialog.assign(view, endEditText);
+
+        //term spinner/drop down
+        Spinner termSpinner = view.findViewById(R.id.term_spinner);
+        DatabaseHelper databaseHelper = new DatabaseHelper(view.getContext());
+        List<Term> allTerms = databaseHelper.getAllTerms();
+        ArrayAdapter<Term> termArrayAdapter = new ArrayAdapter<Term>(view.getContext(), R.layout.drop_down_item, R.id.drop_down_item_textview, allTerms);
+        termSpinner.setAdapter(termArrayAdapter);
 
         //recyclerview stuff
         courseInstructors = new ArrayList<CourseInstructor>();

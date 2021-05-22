@@ -1,5 +1,7 @@
 package com.example.termtracker.Model;
 
+import android.content.Context;
+
 public class Assessment extends ScheduledItem implements Validatable {
     private AssessmentType assessmentType;
 
@@ -8,7 +10,7 @@ public class Assessment extends ScheduledItem implements Validatable {
     }
 
     @Override
-    public boolean isValid() {
+    public boolean isValid(Context context) {
         return false;
     }
 }

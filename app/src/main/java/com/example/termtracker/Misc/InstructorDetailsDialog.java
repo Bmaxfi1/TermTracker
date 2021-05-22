@@ -55,7 +55,7 @@ public class InstructorDetailsDialog extends Dialog implements View.OnClickListe
                         phone.getText().toString(),
                         email.getText().toString()
                 );
-                if (courseInstructorToAdd.isValid()) {
+                if (courseInstructorToAdd.isValid(getContext())) {
                     //add it to the recyclerview
 
 

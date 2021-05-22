@@ -1,5 +1,7 @@
 package com.example.termtracker.Model;
 
+import android.content.Context;
+
 import java.time.LocalDate;
 
 public class Note implements Validatable{
@@ -8,7 +10,7 @@ public class Note implements Validatable{
     private LocalDate createDate;
 
     @Override
-    public boolean isValid() {
+    public boolean isValid(Context context) {
         return false;
     }
 }

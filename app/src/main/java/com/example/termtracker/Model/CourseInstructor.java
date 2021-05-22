@@ -1,5 +1,7 @@
 package com.example.termtracker.Model;
 
+import android.content.Context;
+
 import java.util.Objects;
 
 public class CourseInstructor implements Validatable{
@@ -38,7 +40,7 @@ public class CourseInstructor implements Validatable{
     }
 
     @Override
-    public boolean isValid() {
+    public boolean isValid(Context context) {
         if (Objects.equals(this.getName(), "") || Objects.equals(this.getPhone(), "") || Objects.equals(this.getEmail(), "")) {
             return false;
         }

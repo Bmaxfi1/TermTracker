@@ -1,5 +1,7 @@
 package com.example.termtracker.Model;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 public class Course extends ScheduledItem implements Validatable{
@@ -13,7 +15,7 @@ public class Course extends ScheduledItem implements Validatable{
     }
 
     @Override
-    public boolean isValid() {
+    public boolean isValid(Context context) {
         return false;
     }
 }

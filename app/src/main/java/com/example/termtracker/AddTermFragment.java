@@ -57,7 +57,7 @@ public class AddTermFragment extends Fragment implements CanBeAddedToDatabase {
                 parsedEndDate,
                 false,
                 true);
-        if (termToAdd.isValid()) {
+        if (termToAdd.isValid(getContext())) {
             DatabaseHelper databaseHelper;
             databaseHelper = new DatabaseHelper(view.getContext());
             long idReturned = databaseHelper.addTerm(termToAdd);
@@ -68,9 +68,6 @@ public class AddTermFragment extends Fragment implements CanBeAddedToDatabase {
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
             }
-        } else {
-            Toast.makeText(view.getContext(), "Validation failed.  Check your entries.", Toast.LENGTH_SHORT).show();
-
         }
 
 
