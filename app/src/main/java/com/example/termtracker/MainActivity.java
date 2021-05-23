@@ -11,6 +11,15 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.widget.Toolbar;
 
+/**
+ * @author Brandon Maxfield
+ *
+ * FUTURE ENHANCEMENTS
+ * 1. When adding a note or assessment, allow user to filter classes by term.
+ *
+ */
+
+
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;

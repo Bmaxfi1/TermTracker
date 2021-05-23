@@ -17,14 +17,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/note_title_edit_text"
         android:layout_width="210dp"
         android:layout_height="46dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -36,10 +35,10 @@
         android:layout_marginTop="24dp"
         android:text="Course"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/note_title_edit_text" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/note_course_list_spinner"
         android:layout_width="206dp"
         android:layout_height="42dp"
         android:layout_marginStart="24dp"
@@ -55,10 +54,10 @@
         android:layout_marginTop="24dp"
         android:text="Note Contents"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/note_course_list_spinner" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/note_content_box"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"

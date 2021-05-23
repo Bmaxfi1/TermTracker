@@ -89,8 +89,6 @@ public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase,
         rvCourseInstructors.setAdapter(adapter);
         rvCourseInstructors.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-
-
         //add new instructor button pressed/Dialog stuff
         Button addInstructorButton = (Button) view.findViewById(R.id.add_new_instructor_button);
         addInstructorButton.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +124,6 @@ public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase,
         EditText startEditText = (EditText) view.findViewById(R.id.course_start_date);
         EditText endEditText = (EditText) view.findViewById(R.id.course_end_date);
         Spinner termSpinner = (Spinner) view.findViewById(R.id.term_spinner);
-        RecyclerView instructorRV = (RecyclerView) view.findViewById(R.id.instructorsRecyclerView);
 
         String parsedStartDate = startEditText.getText().toString().replaceAll("[^0-9.]", "");
         String parsedEndDate = endEditText.getText().toString().replaceAll("[^0-9.]", "");

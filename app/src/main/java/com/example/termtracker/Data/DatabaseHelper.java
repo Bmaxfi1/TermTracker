@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.termtracker.Model.Course;
 import com.example.termtracker.Model.CourseInstructor;
+import com.example.termtracker.Model.Note;
 import com.example.termtracker.Model.Term;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "database.db";
-    private static final int VERSION = 11;
+    private static final int VERSION = 12;
 
     private static final String TABLE_TERMS = "terms";
     private static final String TERMS_COL_ID = "_id";
@@ -58,9 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String NOTES_COL_ID = "_id";
     private static final String NOTES_COL_TITLE = "title";
     private static final String NOTES_COL_CONTENT = "content";
-    private static final String NOTES_COL_CREATE_DATE = "create_date";
     private static final String NOTES_COL_COURSE_ID = "course_id";
-
 
     public DatabaseHelper(Context context) {
         //third arg is for CursorFactory instance
@@ -92,7 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " FOREIGN KEY (" + ASSESSMENTS_COL_COURSE_ID + ") REFERENCES " + TABLE_COURSES + " (" + COURSES_COL_ID + ") )";
 
         String CREATE_NOTES_TABLE = "CREATE TABLE " + TABLE_NOTES + "(" + NOTES_COL_ID + " INTEGER PRIMARY KEY," +
-                NOTES_COL_TITLE + " TEXT," + NOTES_COL_CONTENT + " TEXT," + NOTES_COL_CREATE_DATE + " TEXT," +
+                NOTES_COL_TITLE + " TEXT," + NOTES_COL_CONTENT + " TEXT," +
                 NOTES_COL_COURSE_ID + " INTEGER," + "FOREIGN KEY (" + NOTES_COL_COURSE_ID + ") REFERENCES " + TABLE_COURSES + " (" + COURSES_COL_ID + ") )";
 
         db.execSQL(CREATE_TERMS_TABLE);
@@ -112,20 +111,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         onCreate(db);
-    }
-
-    public long addTerm(Term term) {
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(TERMS_COL_TITLE, term.getTitle());
-        values.put(TERMS_COL_START, term.getStartDate());
-        values.put(TERMS_COL_END, term.getEndDate());
-        values.put(TERMS_COL_COMPLETED, term.isCompleted());
-        values.put(TERMS_COL_DELETABLE, term.isDeletable());
-
-        long id = db.insert(TABLE_TERMS, null, values);
-        return id;
     }
 
     public List<Term> getAllTerms() {
@@ -207,7 +192,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-
     public List<Course> getAllCourses() {
         List<Course> allCourses = new ArrayList<Course>();
 
@@ -231,7 +215,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         return allCourses;
+    }
 
+    public Course getCourseByName(String title) {
+        Course course;
+
+        String selectQuery = "SELECT * FROM " + TABLE_COURSES;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                course = new Course(
+                        Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        Boolean.getBoolean(cursor.getString(4)),
+                        Boolean.getBoolean(cursor.getString(5)),
+                        Integer.parseInt(cursor.getString(6))
+                );
+                if (course.getTitle().equals(title)) {
+                    return course;
+                }
+            } while (cursor.moveToNext());
+        }
+        Log.d("superdopetag", "null object on getCourseByName");
+        return null;
+
+    }
+
+    public long addTerm(Term term) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(TERMS_COL_TITLE, term.getTitle());
+        values.put(TERMS_COL_START, term.getStartDate());
+        values.put(TERMS_COL_END, term.getEndDate());
+        values.put(TERMS_COL_COMPLETED, term.isCompleted());
+        values.put(TERMS_COL_DELETABLE, term.isDeletable());
+
+        long id = db.insert(TABLE_TERMS, null, values);
+        return id;
     }
 
     public long addCourse(Course course) {
@@ -259,6 +285,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(INSTRUCTORS_COL_COURSE_ID, instructor.getCourseId());
 
         long id = db.insert(TABLE_INSTRUCTORS, null, values);
+        return id;
+    }
+
+    public long addNote(Note note) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(NOTES_COL_TITLE, note.getTitle());
+        values.put(NOTES_COL_CONTENT, note.getContent());
+        values.put(NOTES_COL_COURSE_ID, note.getCourseId());
+
+        long id = db.insert(TABLE_NOTES, null, values);
         return id;
     }
 
