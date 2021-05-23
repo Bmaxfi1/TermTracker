@@ -5,8 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.termtracker.Model.Course;
+import com.example.termtracker.Model.CourseInstructor;
 import com.example.termtracker.Model.Term;
 
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "database.db";
-    private static final int VERSION = 10;
+    private static final int VERSION = 11;
 
     private static final String TABLE_TERMS = "terms";
     private static final String TERMS_COL_ID = "_id";
@@ -105,6 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists " + TABLE_COURSES);
         db.execSQL("drop table if exists " + TABLE_INSTRUCTORS);
         db.execSQL("drop table if exists " + TABLE_ASSESSMENTS);
+        db.execSQL("drop table if exists " + TABLE_NOTES);
 
 
         onCreate(db);
@@ -172,8 +176,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
             } while (cursor.moveToNext());
         }
+        Log.d("superdopetag", "null object on getTermById");
         return null;
     }
+
+    public Term getTermByName(String title) {
+        Term term;
+
+        String selectQuery = "SELECT * FROM " + TABLE_TERMS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                term = new Term(
+                        Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        Boolean.getBoolean(cursor.getString(4)),
+                        Boolean.getBoolean(cursor.getString(5))
+                );
+                if (term.getTitle().equals(title)) {
+                    return term;
+                }
+            } while (cursor.moveToNext());
+        }
+        Log.d("superdopetag", "null object on getTermByName");
+        return null;
+    }
+
 
     public List<Course> getAllCourses() {
         List<Course> allCourses = new ArrayList<Course>();
@@ -200,4 +233,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allCourses;
 
     }
+
+    public long addCourse(Course course) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COURSES_COL_TITLE, course.getTitle());
+        values.put(COURSES_COL_START, course.getStartDate());
+        values.put(COURSES_COL_END, course.getEndDate());
+        values.put(COURSES_COL_COMPLETED, course.isCompleted());
+        values.put(COURSES_COL_DELETABLE, course.isDeletable());
+        values.put(COURSES_COL_TERM_ID, course.getTermId());
+
+        long id = db.insert(TABLE_COURSES, null, values);
+        return id;
+    }
+
+    public long addInstructor(CourseInstructor instructor) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(INSTRUCTORS_COL_NAME, instructor.getName());
+        values.put(INSTRUCTORS_COL_PHONE, instructor.getPhone());
+        values.put(INSTRUCTORS_COL_EMAIL, instructor.getEmail());
+        values.put(INSTRUCTORS_COL_COURSE_ID, instructor.getCourseId());
+
+        long id = db.insert(TABLE_INSTRUCTORS, null, values);
+        return id;
+    }
+
 }

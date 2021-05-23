@@ -1,6 +1,7 @@
 package com.example.termtracker.Model;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -8,11 +9,21 @@ public class CourseInstructor implements Validatable{
     private String name;
     private String phone;
     private String email;
+    private long courseId;
 
-    public CourseInstructor(String name, String phone, String email) {
+    public long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
+    }
+
+    public CourseInstructor(String name, String phone, String email, int courseId) {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.courseId = courseId;
     }
 
     public String getName() {
@@ -42,6 +53,8 @@ public class CourseInstructor implements Validatable{
     @Override
     public boolean isValid(Context context) {
         if (Objects.equals(this.getName(), "") || Objects.equals(this.getPhone(), "") || Objects.equals(this.getEmail(), "")) {
+            Toast.makeText(context, "Please complete all fields.", Toast.LENGTH_SHORT).show();
+
             return false;
         }
         return true;

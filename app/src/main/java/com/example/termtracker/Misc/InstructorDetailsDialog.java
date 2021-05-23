@@ -53,7 +53,8 @@ public class InstructorDetailsDialog extends Dialog implements View.OnClickListe
                 CourseInstructor courseInstructorToAdd = new CourseInstructor(
                         name.getText().toString(),
                         phone.getText().toString(),
-                        email.getText().toString()
+                        email.getText().toString(),
+                        -1
                 );
                 if (courseInstructorToAdd.isValid(getContext())) {
                     //add it to the recyclerview

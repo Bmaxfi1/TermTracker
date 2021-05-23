@@ -27,7 +27,7 @@ public class InstructorDetailsDialogFragment extends DialogFragment implements V
             getTargetFragment().getActivity().getCurrentFocus().clearFocus();
         }
         CourseInstructor courseInstructor = new CourseInstructor(
-                name.getText().toString(), phone.getText().toString(), email.getText().toString()
+                name.getText().toString(), phone.getText().toString(), email.getText().toString(), -1
         );
 
         if (courseInstructor.isValid(getContext())) {
@@ -36,7 +36,6 @@ public class InstructorDetailsDialogFragment extends DialogFragment implements V
             listener.onSaveInstructor(name.getText().toString(), phone.getText().toString(), email.getText().toString());
             dismiss();
         }
-        Toast.makeText(getContext(), "Please complete all fields.", Toast.LENGTH_SHORT).show(); //isn't working
 
     }
 

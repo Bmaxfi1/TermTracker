@@ -1,6 +1,7 @@
 package com.example.termtracker.Model;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.termtracker.Data.DatabaseHelper;
@@ -18,6 +19,7 @@ public class Course extends ScheduledItem implements Validatable {
 
     public Course(int id, String title, String startDate, String endDate, boolean completed, boolean canBeDeleted, int termId) {
         super(id, title, startDate, endDate, completed, canBeDeleted);
+        this.termId = termId;
     }
 
     @Override
@@ -30,6 +32,8 @@ public class Course extends ScheduledItem implements Validatable {
             valid = false;
             fieldsComplete = false;
         }
+
+        Log.d("superdopetag", this.getStartDate());
 
         //further validation happens only if all fields are complete
         if (fieldsComplete) {
@@ -54,6 +58,10 @@ public class Course extends ScheduledItem implements Validatable {
 
             //course cannot exist outside the term start/end dates
             Term termToCheck = helper.getTermById(this.termId);
+
+            Log.d("superdopetag", String.valueOf(Integer.parseInt(termToCheck.getStartDate())));
+            Log.d("superdopetag", String.valueOf(Integer.parseInt(this.getStartDate())));
+
             if (Integer.parseInt(termToCheck.getStartDate()) > Integer.parseInt(this.getStartDate()) ||
             Integer.parseInt(termToCheck.getEndDate()) < Integer.parseInt(this.getEndDate())) {
                 Toast.makeText(context, "The selected course dates are outside the dates of the selected term", Toast.LENGTH_SHORT).show();

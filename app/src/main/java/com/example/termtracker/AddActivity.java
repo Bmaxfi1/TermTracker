@@ -5,9 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.termtracker.Data.DatabaseHelper;
+import com.example.termtracker.Model.Term;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -35,9 +43,11 @@ public class AddActivity extends AppCompatActivity {
             intent.putExtra("type", "assessment");
             startActivity(intent);
         } else if (view == findViewById(R.id.add_course_button)) {
-            Intent intent = new Intent(this, AddDetailsActivity.class);
-            intent.putExtra("type", "course");
-            startActivity(intent);
+
+                Intent intent = new Intent(this, AddDetailsActivity.class);
+                intent.putExtra("type", "course");
+                startActivity(intent);
+
         } else if (view == findViewById(R.id.add_term_button)) {
             Intent intent = new Intent(this, AddDetailsActivity.class);
             intent.putExtra("type", "term");
