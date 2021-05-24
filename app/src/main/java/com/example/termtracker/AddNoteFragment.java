@@ -53,7 +53,7 @@ public class AddNoteFragment extends Fragment implements CanBeAddedToDatabase {
         for (Course course: allCourses) {
             allCoursesAsString.add(course.getTitle());
         }
-        Collections.reverse(allCoursesAsString); //this is done to show the most recent term at the top
+        Collections.reverse(allCoursesAsString); //this is done to show the most recent course at the top
 
         ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<String>(view.getContext(), R.layout.drop_down_item, R.id.drop_down_item_textview, allCoursesAsString);
         courseSpinner.setAdapter(courseArrayAdapter);

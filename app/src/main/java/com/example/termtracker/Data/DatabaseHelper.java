@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.example.termtracker.Model.Assessment;
 import com.example.termtracker.Model.Course;
 import com.example.termtracker.Model.CourseInstructor;
 import com.example.termtracker.Model.Note;
@@ -138,7 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allTerms;
     }
 
-    public Term getTermById(int id) {
+    public Term getTermById(long id) {
         Term term;
 
         String selectQuery = "SELECT * FROM " + TABLE_TERMS;
@@ -215,6 +215,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         return allCourses;
+    }
+
+    public Course getCourseById(int id) {
+        Course course;
+
+        String selectQuery = "SELECT * FROM " + TABLE_COURSES;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                course = new Course(
+                        Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        Boolean.getBoolean(cursor.getString(4)),
+                        Boolean.getBoolean(cursor.getString(5)),
+                        Integer.parseInt(cursor.getString(6))
+                );
+                if (course.getId() == id) {
+                    return course;
+                }
+            } while (cursor.moveToNext());
+        }
+        Log.d("superdopetag", "null object on getTermById");
+        return null;
+
     }
 
     public Course getCourseByName(String title) {
@@ -297,6 +326,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(NOTES_COL_COURSE_ID, note.getCourseId());
 
         long id = db.insert(TABLE_NOTES, null, values);
+        return id;
+    }
+
+    public long addAssessment(Assessment assessment){
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ASSESSMENTS_COL_TITLE, assessment.getTitle());
+        values.put(ASSESSMENTS_COL_TYPE, assessment.getAssessmentType().toString());
+        values.put(ASSESSMENTS_COL_START, assessment.getStartDate());
+        values.put(ASSESSMENTS_COL_END, assessment.getEndDate());
+        values.put(ASSESSMENTS_COL_COMPLETED, assessment.isCompleted());
+        values.put(ASSESSMENTS_COL_DELETABLE, assessment.isDeletable());
+        values.put(ASSESSMENTS_COL_COURSE_ID, assessment.getCourseId());
+
+        long id = db.insert(TABLE_ASSESSMENTS, null, values);
         return id;
     }
 

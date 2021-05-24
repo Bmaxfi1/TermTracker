@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".AddAssessmentFragment" >
 
+    <Spinner
+        android:id="@+id/assessment_course_spinner"
+        android:layout_width="162dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
@@ -17,14 +26,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/assessment_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -36,16 +44,20 @@
         android:layout_marginTop="24dp"
         android:text="Start Date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/assessment_title" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/assessment_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="date"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -57,16 +69,20 @@
         android:layout_marginTop="24dp"
         android:text="End Date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintTop_toBottomOf="@+id/assessment_start" />
 
     <EditText
-        android:id="@+id/editTextDate2"
+        android:id="@+id/assessment_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="date"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
@@ -78,14 +94,24 @@
         android:layout_marginTop="24dp"
         android:text="Assessment Type"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate2" />
+        app:layout_constraintTop_toBottomOf="@+id/assessment_end" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/assessment_type_spinner"
         android:layout_width="162dp"
         android:layout_height="50dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Course"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assessment_type_spinner" />
 </androidx.constraintlayout.widget.ConstraintLayout>

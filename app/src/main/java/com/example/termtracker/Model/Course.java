@@ -70,9 +70,6 @@ public class Course extends ScheduledItem implements Validatable {
 
             return valid;
         }
-
-
-
         return false;
     }
 
