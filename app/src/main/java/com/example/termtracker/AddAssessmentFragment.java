@@ -96,11 +96,11 @@ public class AddAssessmentFragment extends Fragment implements CanBeAddedToDatab
 
         Assessment assessmentToAdd = new Assessment(-1,
                 titleEditText.getText().toString(),
+                type,
                 parsedStartDate,
                 parsedEndDate,
                 false,
                 true,
-                type,
                 course.getId());
 
         if (assessmentToAdd.isValid(getContext())) {

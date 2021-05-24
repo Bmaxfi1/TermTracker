@@ -1,4 +1,4 @@
-package Adapters;
+package com.example.termtracker.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

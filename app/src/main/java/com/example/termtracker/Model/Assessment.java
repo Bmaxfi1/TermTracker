@@ -12,7 +12,7 @@ public class Assessment extends ScheduledItem implements Validatable {
     private AssessmentType assessmentType;
     int courseId;
 
-    public Assessment(int id, String title, String startDate, String endDate, boolean completed, boolean canBeDeleted, AssessmentType type, int courseId) {
+    public Assessment(int id, String title, AssessmentType type, String startDate, String endDate, boolean completed, boolean canBeDeleted,  int courseId) {
         super(id, title, startDate, endDate, completed, canBeDeleted);
         assessmentType = type;
         this.courseId = courseId;

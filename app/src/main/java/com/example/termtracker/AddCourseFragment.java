@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import Adapters.InstructorsRecyclerviewAdapter;
+import com.example.termtracker.Adapters.InstructorsRecyclerviewAdapter;
 
 public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase, InstructorDetailsDialogFragment.InstructorDetailsDialogFragmentListener {
 

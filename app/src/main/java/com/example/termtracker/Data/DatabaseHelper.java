@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.termtracker.Model.Assessment;
+import com.example.termtracker.Model.AssessmentType;
 import com.example.termtracker.Model.Course;
 import com.example.termtracker.Model.CourseInstructor;
 import com.example.termtracker.Model.Note;
@@ -128,8 +129,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        Boolean.getBoolean(cursor.getString(4)),
-                        Boolean.getBoolean(cursor.getString(5))
+                        sqliteBoolToJavaBool(cursor.getString(4)),
+                        sqliteBoolToJavaBool(cursor.getString(5))
 
                 );
                 allTerms.add(term);
@@ -153,8 +154,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        Boolean.getBoolean(cursor.getString(4)),
-                        Boolean.getBoolean(cursor.getString(5))
+                        sqliteBoolToJavaBool(cursor.getString(4)),
+                        sqliteBoolToJavaBool(cursor.getString(5))
                 );
                 if (term.getId() == id) {
                     return term;
@@ -180,8 +181,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        Boolean.getBoolean(cursor.getString(4)),
-                        Boolean.getBoolean(cursor.getString(5))
+                        sqliteBoolToJavaBool(cursor.getString(4)),
+                        sqliteBoolToJavaBool(cursor.getString(5))
                 );
                 if (term.getTitle().equals(title)) {
                     return term;
@@ -207,8 +208,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        Boolean.getBoolean(cursor.getString(4)),
-                        Boolean.getBoolean(cursor.getString(5)),
+                        sqliteBoolToJavaBool(cursor.getString(4)),
+                        sqliteBoolToJavaBool(cursor.getString(5)),
                         Integer.parseInt(cursor.getString(6))
                 );
                 allCourses.add(course);
@@ -232,8 +233,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        Boolean.getBoolean(cursor.getString(4)),
-                        Boolean.getBoolean(cursor.getString(5)),
+                        sqliteBoolToJavaBool(cursor.getString(4)),
+                        sqliteBoolToJavaBool(cursor.getString(5)),
                         Integer.parseInt(cursor.getString(6))
                 );
                 if (course.getId() == id) {
@@ -241,7 +242,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
             } while (cursor.moveToNext());
         }
-        Log.d("superdopetag", "null object on getTermById");
+        Log.d("superdopetag", "null object on getCourseById");
         return null;
 
     }
@@ -261,8 +262,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        Boolean.getBoolean(cursor.getString(4)),
-                        Boolean.getBoolean(cursor.getString(5)),
+                        sqliteBoolToJavaBool(cursor.getString(4)),
+                        sqliteBoolToJavaBool(cursor.getString(5)),
                         Integer.parseInt(cursor.getString(6))
                 );
                 if (course.getTitle().equals(title)) {
@@ -329,6 +330,62 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    public List<Assessment> getAllAssessments() {
+        List<Assessment> allAssessments = new ArrayList<Assessment>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_ASSESSMENTS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Assessment assessment = new Assessment(
+                        Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),
+                        AssessmentType.get(cursor.getString(2)),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        sqliteBoolToJavaBool(cursor.getString(5)),
+                        sqliteBoolToJavaBool(cursor.getString(6)),
+                        Integer.parseInt(cursor.getString(7))
+                );
+                allAssessments.add(assessment);
+            } while (cursor.moveToNext());
+        }
+        return allAssessments;
+    }
+
+    public Assessment getAssessmentById(int id) {
+        Assessment assessment;
+
+        String selectQuery = "SELECT * FROM " + TABLE_ASSESSMENTS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                assessment = new Assessment(
+                        Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),
+                        AssessmentType.get(cursor.getString(2)),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        sqliteBoolToJavaBool(cursor.getString(5)),
+                        sqliteBoolToJavaBool(cursor.getString(6)),
+                        Integer.parseInt(cursor.getString(7))
+                );
+                if (assessment.getId() == id) {
+                    return assessment;
+                }
+            } while (cursor.moveToNext());
+        }
+        Log.d("superdopetag", "null object on getAssessmentById");
+        return null;
+
+    }
+
     public long addAssessment(Assessment assessment){
         SQLiteDatabase db = getWritableDatabase();
 
@@ -343,6 +400,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long id = db.insert(TABLE_ASSESSMENTS, null, values);
         return id;
+    }
+
+    public long updateAssessment(Assessment assessment) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ASSESSMENTS_COL_TITLE, assessment.getTitle());
+        values.put(ASSESSMENTS_COL_TYPE, assessment.getAssessmentType().toString());
+        values.put(ASSESSMENTS_COL_START, assessment.getStartDate());
+        values.put(ASSESSMENTS_COL_END, assessment.getEndDate());
+        values.put(ASSESSMENTS_COL_COMPLETED, assessment.isCompleted());
+        values.put(ASSESSMENTS_COL_DELETABLE, assessment.isDeletable());
+        values.put(ASSESSMENTS_COL_COURSE_ID, assessment.getCourseId());
+
+        db.update(TABLE_ASSESSMENTS, values, "_id = ?", new String[]{String.valueOf(assessment.getId())});
+
+        return assessment.getId();
+    }
+
+    public Boolean sqliteBoolToJavaBool(String i) {
+        if (i.equals("1")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
