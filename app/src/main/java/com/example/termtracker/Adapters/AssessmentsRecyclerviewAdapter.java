@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import java.util.List;
 public class AssessmentsRecyclerviewAdapter extends
         RecyclerView.Adapter<AssessmentsRecyclerviewAdapter.ViewHolder> {
 
+
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -30,6 +32,7 @@ public class AssessmentsRecyclerviewAdapter extends
         public TextView titleTextView;
         public TextView startTextView;
         public TextView endTextView;
+        public ImageView starImageView;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -41,6 +44,7 @@ public class AssessmentsRecyclerviewAdapter extends
             titleTextView = (TextView) itemView.findViewById(R.id.home_assessment_title);
             startTextView = (TextView) itemView.findViewById(R.id.home_assessment_start);
             endTextView = (TextView) itemView.findViewById(R.id.home_assessment_end);
+            starImageView = (ImageView) itemView.findViewById(R.id.assessment_completion_star);
 
         }
         public void bind(final Assessment assessment, final OnAssessmentClickListener listener) {
@@ -83,13 +87,22 @@ public class AssessmentsRecyclerviewAdapter extends
         // Get the data model based on position
         Assessment assessment = assessmentList.get(position);
 
-        // Set item views based on your views and data model
+        // Set item views
         TextView textView = holder.titleTextView;
         TextView textView1 = holder.startTextView;
         TextView textView2 = holder.endTextView;
+        ImageView imageView = holder.starImageView;
+
         textView.setText(assessment.getTitle());
         textView1.setText(assessment.getStartDate());
         textView2.setText(assessment.getEndDate());
+
+        //set gold star image
+        if (assessment.isCompleted()) {
+            imageView.setImageResource(R.drawable.ic_baseline_star_24);
+        } else {
+            imageView.setImageResource(R.drawable.ic_baseline_star_border_24);
+        }
 
         holder.bind(assessmentList.get(position), listener);
     }

@@ -3,8 +3,9 @@ package com.example.termtracker;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,15 +16,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.termtracker.Data.DatabaseHelper;
+import com.example.termtracker.Misc.ConfirmationDialogFragment;
+import com.example.termtracker.Misc.EditAssessmentDialogFragment;
 import com.example.termtracker.Model.Assessment;
 
-public class AssessmentDetailsActivity extends AppCompatActivity {
+public class AssessmentDetailsActivity extends AppCompatActivity implements ConfirmationDialogFragment.ConfirmationDialogFragmentListener {
 
     Assessment assessment;
 
-    TextView assessmentTextView;
+    TextView assessmentTitle;
     TextView assessmentStart;
     TextView assessmentEnd;
+    TextView assessmentType;
+    TextView assessmentCourseName;
     ImageView star;
     TextView completionLabel;
     Button completeButton;
@@ -33,9 +38,11 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_details);
 
-        assessmentTextView = (TextView) findViewById(R.id.assessment_details_title);
+        assessmentTitle = (TextView) findViewById(R.id.assessment_details_title);
         assessmentStart = (TextView) findViewById(R.id.assessment_details_start);
         assessmentEnd = (TextView) findViewById(R.id.assessment_details_end);
+        assessmentType = (TextView) findViewById(R.id.assessment_details_type);
+        assessmentCourseName = (TextView) findViewById(R.id.assessment_details_course_name);
         star = (ImageView) findViewById(R.id.assessment_details_star);
         completionLabel = (TextView) findViewById(R.id.assessment_complete_label);
         completeButton = (Button) findViewById(R.id.assessment_details_complete_button);
@@ -55,12 +62,15 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
             assessment =  helper.getAssessmentById(value);
         }
 
-        assessmentTextView.setText(assessment.getTitle());
+        DatabaseHelper helper = new DatabaseHelper(this);
+
+        assessmentTitle.setText(assessment.getTitle());
         assessmentStart.setText(assessment.getStartDate());
         assessmentEnd.setText(assessment.getEndDate());
+        assessmentType.setText(assessment.getAssessmentType().toString());
+        assessmentCourseName.setText(helper.getCourseById((int) assessment.getCourseId()).getTitle());
 
         checkCompletionStatusAndUpdateForm(assessment);
-
 
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +91,6 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
         });
     }
 
-
-
     //overloaded default method, used to set the appbar menu
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_or_delete_menu, menu);
@@ -100,10 +108,12 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
         // Display menu item's title by using a Toast.
         if (id == R.id.appbar_edit) {
             Toast.makeText(getApplicationContext(), "Edit", Toast.LENGTH_SHORT).show();
+            showNewEditDialog();
             return true;
         }
         if (id == R.id.appbar_delete) {
             Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
+            showNewConfirmationDialog();
             return true;
         }
 
@@ -119,6 +129,29 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
             star.setImageResource(R.drawable.ic_baseline_star_border_24);
             completeButton.setText("Yep!");
             completionLabel.setText("Complete?");
+        }
+    }
+    private void showNewEditDialog() {
+        FragmentManager fm = this.getSupportFragmentManager();
+        EditAssessmentDialogFragment editAssessmentDialogFragment = EditAssessmentDialogFragment.newInstance(String.valueOf(assessment.getId()));
+        editAssessmentDialogFragment.show(fm, "edit_assessment_dialog");
+    }
+
+    private void showNewConfirmationDialog() {
+        FragmentManager fm = this.getSupportFragmentManager();
+        ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Are you sure you want to delete this assessment?", "Confirm", "Cancel");
+        confirmationDialogFragment.show(fm, "delete_assessment_dialog"); //todo see if this tag is right.  used to be "edit_assessment_dialog"
+    }
+
+
+    @Override
+    public void onConfirmDialogResolved(boolean result) {
+        if (result) {
+            DatabaseHelper helper = new DatabaseHelper(this);
+            helper.deleteAssessment(assessment);
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
 }

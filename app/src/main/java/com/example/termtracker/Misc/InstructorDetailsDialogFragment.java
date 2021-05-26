@@ -26,13 +26,13 @@ public class InstructorDetailsDialogFragment extends DialogFragment implements V
         if (getTargetFragment().getActivity().getCurrentFocus() != null) {
             getTargetFragment().getActivity().getCurrentFocus().clearFocus();
         }
-        CourseInstructor courseInstructor = new CourseInstructor(
+        CourseInstructor courseInstructor = new CourseInstructor(-1,
                 name.getText().toString(), phone.getText().toString(), email.getText().toString(), -1
         );
 
         if (courseInstructor.isValid(getContext())) {
 
-            InstructorDetailsDialogFragmentListener listener = (InstructorDetailsDialogFragmentListener) getTargetFragment(); //cast exception
+            InstructorDetailsDialogFragmentListener listener = (InstructorDetailsDialogFragmentListener) getTargetFragment();
             listener.onSaveInstructor(name.getText().toString(), phone.getText().toString(), email.getText().toString());
             dismiss();
         }

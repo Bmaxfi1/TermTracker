@@ -6,6 +6,7 @@ import android.widget.Toast;
 import java.util.Objects;
 
 public class CourseInstructor implements Validatable{
+    private int id;
     private String name;
     private String phone;
     private String email;
@@ -19,7 +20,8 @@ public class CourseInstructor implements Validatable{
         this.courseId = courseId;
     }
 
-    public CourseInstructor(String name, String phone, String email, int courseId) {
+    public CourseInstructor(int id, String name, String phone, String email, int courseId) {
+        this.id = id;
         this.name = name;
         this.phone = phone;
         this.email = email;

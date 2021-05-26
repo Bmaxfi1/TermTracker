@@ -1,5 +1,6 @@
 package com.example.termtracker;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -67,6 +68,15 @@ public class AssessmentsFragment extends Fragment {
             }
         }
 
+        incompleteAssessmentsRV = (RecyclerView) view.findViewById(R.id.home_incomplete_assessments_rv);
+        incompleteAssessmentsRV.setAdapter(new AssessmentsRecyclerviewAdapter(incompleteAssessments, new OnAssessmentClickListener() {
+            @Override
+            public void onItemClick(Assessment assessment) {
+                Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
+                launchAssessmentDetails(assessment);
+            }
+        }));
+        incompleteAssessmentsRV.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         completeAssessmentsRV = (RecyclerView) view.findViewById(R.id.home_complete_assessments_rv);
         completeAssessmentsRV.setAdapter(new AssessmentsRecyclerviewAdapter(completeAssessments, new OnAssessmentClickListener() {
@@ -77,16 +87,6 @@ public class AssessmentsFragment extends Fragment {
             }
         }));
         completeAssessmentsRV.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        incompleteAssessmentsRV = (RecyclerView) view.findViewById(R.id.home_incomplete_assessments_rv);
-        incompleteAssessmentsRV.setAdapter(new AssessmentsRecyclerviewAdapter(incompleteAssessments, new OnAssessmentClickListener() {
-            @Override
-            public void onItemClick(Assessment assessment) {
-                Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
-                launchAssessmentDetails(assessment);
-            }
-        }));
-        incompleteAssessmentsRV.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
 
     public void launchAssessmentDetails(Assessment assessment) {

@@ -10,8 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:name=".AssessmentDetailsActivity"
+            android:name=".CourseDetailsActivity"
             android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".AssessmentDetailsActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddDetailsActivity"
             android:parentActivityName=".AddActivity" />

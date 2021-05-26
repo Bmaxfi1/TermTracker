@@ -4,7 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddAssessmentFragment" >
+    android:clickable="false"
+    android:isScrollContainer="true"
+    tools:context=".AddAssessmentFragment">
+
+    <Button
+        android:id="@+id/assessment_cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        android:clickable="false"
+        android:text="Cancel"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/assessment_save_button"
+        app:layout_constraintTop_toBottomOf="@+id/assessment_course_spinner" />
 
     <Spinner
         android:id="@+id/assessment_course_spinner"
@@ -27,7 +41,7 @@
 
     <EditText
         android:id="@+id/assessment_title"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
@@ -48,16 +62,16 @@
 
     <EditText
         android:id="@+id/assessment_start"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="date"
         android:clickable="false"
         android:cursorVisible="false"
+        android:ems="10"
         android:focusable="false"
         android:focusableInTouchMode="false"
+        android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -73,16 +87,16 @@
 
     <EditText
         android:id="@+id/assessment_end"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="date"
         android:clickable="false"
         android:cursorVisible="false"
+        android:ems="10"
         android:focusable="false"
         android:focusableInTouchMode="false"
+        android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
@@ -114,4 +128,16 @@
         android:text="Course"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/assessment_type_spinner" />
+
+    <Button
+        android:id="@+id/assessment_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:clickable="false"
+        android:text="Save"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assessment_course_spinner" />
 </androidx.constraintlayout.widget.ConstraintLayout>

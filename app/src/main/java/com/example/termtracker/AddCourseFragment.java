@@ -109,7 +109,7 @@ public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase,
     @Override
     public void onSaveInstructor(String newName, String newPhone, String newEmail) {
         //add new frag item
-        CourseInstructor courseInstructor = new CourseInstructor(newName, newPhone, newEmail, -1);
+        CourseInstructor courseInstructor = new CourseInstructor(-1, newName, newPhone, newEmail, -1);
         Log.d("superdopetag", courseInstructor.getName());
         courseInstructors.add(courseInstructor);
         Log.d("superdopetag", courseInstructors.get(0).getName());

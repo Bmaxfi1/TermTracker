@@ -79,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COURSES_COL_TITLE + " TEXT," + COURSES_COL_START + " TEXT," +
                 COURSES_COL_END + " TEXT," + COURSES_COL_COMPLETED + " TEXT," + COURSES_COL_DELETABLE + " TEXT," +
                 COURSES_COL_TERM_ID + " INTEGER," +
-                " FOREIGN KEY (" + COURSES_COL_TERM_ID +") REFERENCES " + TABLE_TERMS + " (" + TERMS_COL_ID + ") )";
+                " FOREIGN KEY (" + COURSES_COL_TERM_ID + ") REFERENCES " + TABLE_TERMS + " (" + TERMS_COL_ID + ") )";
 
         String CREATE_INSTRUCTORS_TABLE = "CREATE TABLE " + TABLE_INSTRUCTORS + "(" + INSTRUCTORS_COL_ID + " INTEGER PRIMARY KEY," +
                 INSTRUCTORS_COL_NAME + " TEXT," + INSTRUCTORS_COL_PHONE + " TEXT," + INSTRUCTORS_COL_EMAIL +
@@ -386,7 +386,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public long addAssessment(Assessment assessment){
+    public long addAssessment(Assessment assessment) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -416,8 +416,96 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.update(TABLE_ASSESSMENTS, values, "_id = ?", new String[]{String.valueOf(assessment.getId())});
 
+        Course course = getCourseById((int) assessment.getCourseId());
+        checkAndUpdateCourseCompleteStatus(course);
+
         return assessment.getId();
     }
+
+    public long updateCourse(Course course) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COURSES_COL_TITLE, course.getTitle());
+        values.put(COURSES_COL_START, course.getStartDate());
+        values.put(COURSES_COL_END, course.getEndDate());
+        values.put(COURSES_COL_COMPLETED, course.isCompleted());
+        values.put(COURSES_COL_DELETABLE, course.isDeletable());
+        values.put(COURSES_COL_TERM_ID, course.getTermId());
+
+        db.update(TABLE_COURSES, values, "_id = ?", new String[]{String.valueOf(course.getId())});
+        return course.getId();
+    }
+
+    public long deleteAssessment(Assessment assessment) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete(TABLE_ASSESSMENTS, "_id = ?", new String[]{String.valueOf(assessment.getId())});
+
+        Course course = getCourseById((int) assessment.getCourseId());
+        checkAndUpdateCourseCompleteStatus(course);
+
+        return assessment.getId();
+    }
+
+    public long deleteCourse(Course course) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete(TABLE_INSTRUCTORS, "course_id = ?", new String[]{String.valueOf(course.getId())});
+        db.delete(TABLE_NOTES, "course_id = ?", new String[]{String.valueOf(course.getId())});
+        db.delete(TABLE_ASSESSMENTS, "course_id = ?", new String[]{String.valueOf(course.getId())});
+        db.delete(TABLE_COURSES, "_id = ?", new String[]{String.valueOf(course.getId())});
+
+        return course.getId();
+    }
+
+    public List<CourseInstructor> getAllInstructors() {
+        List<CourseInstructor> allInstructors = new ArrayList<CourseInstructor>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_INSTRUCTORS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                CourseInstructor instructor = new CourseInstructor(
+                        Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        Integer.parseInt(cursor.getString(4))
+
+                );
+                allInstructors.add(instructor);
+            } while (cursor.moveToNext());
+        }
+        return allInstructors;
+    }
+
+    public List<Note> getAllNotes() {
+        List<Note> allNotes = new ArrayList<Note>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_NOTES;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Note note = new Note(
+                        Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        Integer.parseInt(cursor.getString(3))
+
+                );
+                allNotes.add(note);
+            } while (cursor.moveToNext());
+        }
+        return allNotes;
+    }
+
 
     public Boolean sqliteBoolToJavaBool(String i) {
         if (i.equals("1")) {
@@ -427,4 +515,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void checkAndUpdateCourseCompleteStatus(Course course) {
+        List<Assessment> allAssessments = getAllAssessments();
+        List<Assessment> allAssessmentsForThisCourse = new ArrayList<>();
+        for (Assessment assessment: allAssessments) {
+            if (assessment.getCourseId() == course.getId()) {
+                allAssessmentsForThisCourse.add(assessment);
+            }
+        }
+
+        boolean courseComplete = true;
+
+        if (allAssessmentsForThisCourse.isEmpty()) {
+            courseComplete = false;
+        } else {
+            for (Assessment assessment : allAssessmentsForThisCourse) {
+                if (!assessment.isCompleted()) {
+                    courseComplete = false;
+                    break;
+                }
+            }
+        }
+
+        course.setCompleted(courseComplete);
+        updateCourse(course);
+    }
 }

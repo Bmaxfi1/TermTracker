@@ -50,7 +50,7 @@ public class InstructorDetailsDialog extends Dialog implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.instructor_dialog_save_button:
-                CourseInstructor courseInstructorToAdd = new CourseInstructor(
+                CourseInstructor courseInstructorToAdd = new CourseInstructor(-1,
                         name.getText().toString(),
                         phone.getText().toString(),
                         email.getText().toString(),
