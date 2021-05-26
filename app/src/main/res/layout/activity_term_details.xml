@@ -9,20 +9,33 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:isScrollContainer="true"
         tools:context=".CourseDetailsActivity">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="Term Details" />
+
         <ImageView
-            android:id="@+id/course_details_star"
+            android:id="@+id/term_details_star"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar5"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar6"
             app:srcCompat="@drawable/ic_baseline_star_border_24" />
 
         <TextView
-            android:id="@+id/course_details_assessments_left_label"
+            android:id="@+id/term_details_courses_left_label"
             android:layout_width="94dp"
             android:layout_height="37dp"
             android:layout_marginTop="8dp"
@@ -31,18 +44,7 @@
             android:textAlignment="center"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/course_details_star" />
-
-        <TextView
-            android:id="@+id/course_details_term_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="72dp"
-            android:text="TextView"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/term_details_title" />
+            app:layout_constraintTop_toBottomOf="@+id/term_details_star" />
 
         <TextView
             android:id="@+id/term_details_end"
@@ -55,18 +57,6 @@
             app:layout_constraintStart_toEndOf="@+id/textView35"
             app:layout_constraintTop_toBottomOf="@+id/term_details_title" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="Course Details" />
-
         <TextView
             android:id="@+id/term_details_title"
             android:layout_width="wrap_content"
@@ -76,7 +66,7 @@
             android:text="TextView"
             android:textSize="28sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar5" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar6" />
 
         <TextView
             android:id="@+id/term_details_start"
@@ -104,22 +94,23 @@
             android:id="@+id/term_details_courses_left"
             android:layout_width="52dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="36dp"
             android:text="-1"
             android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/course_details_assessments_left_label" />
+            app:layout_constraintTop_toBottomOf="@+id/term_details_courses_left_label" />
 
         <TextView
             android:id="@+id/textView37"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="Instructors"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="68dp"
+            android:text="Courses"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/course_details_term_title" />
+            app:layout_constraintTop_toBottomOf="@+id/term_details_start" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/term_details_courses_rv"
@@ -129,46 +120,6 @@
             android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView37" />
-
-        <TextView
-            android:id="@+id/textView38"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="Notes"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/term_details_courses_rv" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/course_details_notes_rv"
-            android:layout_width="363dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView38" />
-
-        <TextView
-            android:id="@+id/textView40"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="Assessments"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/course_details_notes_rv" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/course_details_assessments_rv"
-            android:layout_width="363dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView40" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

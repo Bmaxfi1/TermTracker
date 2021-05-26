@@ -422,6 +422,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return assessment.getId();
     }
 
+    public long updateTerm(Term term) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(TERMS_COL_TITLE, term.getTitle());
+        values.put(TERMS_COL_START, term.getStartDate());
+        values.put(TERMS_COL_END, term.getEndDate());
+        values.put(TERMS_COL_COMPLETED, term.isCompleted());
+        values.put(TERMS_COL_DELETABLE, term.isDeletable());
+
+        db.update(TABLE_TERMS, values, "_id = ?", new String[]{String.valueOf(term.getId())});
+        return term.getId();
+    }
+
     public long updateCourse(Course course) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -434,6 +448,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COURSES_COL_TERM_ID, course.getTermId());
 
         db.update(TABLE_COURSES, values, "_id = ?", new String[]{String.valueOf(course.getId())});
+
+        checkAndUpdateTermCompleteStatus(getTermById(course.getTermId()));
+
         return course.getId();
     }
 
@@ -455,6 +472,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_NOTES, "course_id = ?", new String[]{String.valueOf(course.getId())});
         db.delete(TABLE_ASSESSMENTS, "course_id = ?", new String[]{String.valueOf(course.getId())});
         db.delete(TABLE_COURSES, "_id = ?", new String[]{String.valueOf(course.getId())});
+
+        checkAndUpdateTermCompleteStatus(getTermById(course.getTermId()));
 
         return course.getId();
     }
@@ -540,4 +559,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         course.setCompleted(courseComplete);
         updateCourse(course);
     }
+
+    public void checkAndUpdateTermCompleteStatus(Term term) {
+        List<Course> allCourses = getAllCourses();
+        List<Course> allCoursesForThisTerm = new ArrayList<>();
+        for (Course course: allCourses) {
+            if (course.getTermId() == term.getId()) {
+                allCoursesForThisTerm.add(course);
+            }
+        }
+
+        boolean termComplete = true;
+
+        if (allCoursesForThisTerm.isEmpty()) {
+            termComplete = false;
+        } else {
+            for (Course course : allCoursesForThisTerm) {
+                if (!course.isCompleted()) {
+                    termComplete = false;
+                    break;
+                }
+            }
+        }
+
+        term.setCompleted(termComplete);
+        updateTerm(term);
+    }
+
 }

@@ -51,15 +51,15 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_details);
 
-        courseTitle = (TextView) findViewById(R.id.course_details_title);
-        courseStart = (TextView) findViewById(R.id.course_details_start);
-        courseEnd = (TextView) findViewById(R.id.course_details_end);
+        courseTitle = (TextView) findViewById(R.id.term_details_title);
+        courseStart = (TextView) findViewById(R.id.term_details_start);
+        courseEnd = (TextView) findViewById(R.id.term_details_end);
         courseTerm = (TextView) findViewById(R.id.course_details_term_title);
-        courseAssessmentsLeft = (TextView) findViewById(R.id.course_details_assessments_left);
+        courseAssessmentsLeft = (TextView) findViewById(R.id.term_details_courses_left);
         courseAssessmentsLeftLabel = (TextView) findViewById(R.id.course_details_assessments_left_label);
         star = (ImageView) findViewById(R.id.course_details_star);
 
-        instructorsRv = (RecyclerView) findViewById(R.id.course_details_instructors_rv) ;
+        instructorsRv = (RecyclerView) findViewById(R.id.term_details_courses_rv) ;
         notesRv = (RecyclerView) findViewById(R.id.course_details_notes_rv) ;
         assessmentsRv = (RecyclerView) findViewById(R.id.course_details_assessments_rv);
 
@@ -155,7 +155,6 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
             showNewShareNotesDialog();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

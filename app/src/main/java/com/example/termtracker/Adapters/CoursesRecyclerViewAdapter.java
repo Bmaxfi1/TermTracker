@@ -55,7 +55,6 @@ public class CoursesRecyclerViewAdapter extends RecyclerView.Adapter<CoursesRecy
         courseList = courses;
     }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
