@@ -204,7 +204,8 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
 
     public void showNewEditDialog() {
         FragmentManager fm = this.getSupportFragmentManager();
-        //todo
+        EditCourseDialogFragment editCourseDialogFragment = EditCourseDialogFragment.newInstance(String.valueOf(course.getId()));
+        editCourseDialogFragment.show(fm, "edit_course_dialog"); //todo what is this tag for??
     }
 
     public void showNewConfirmationDialog() {

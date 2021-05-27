@@ -73,6 +73,45 @@ public class Course extends ScheduledItem implements Validatable {
         return false;
     }
 
+    public boolean isValidEdit(Context context) {
+        boolean valid = true;
+        boolean fieldsComplete = true;
+        if (Objects.equals(this.getTitle(), "") || Objects.equals(this.getStartDate(), "") || Objects.equals(this.getEndDate(), "") ||
+                Objects.equals(this.getTermId(), "")) {
+            Toast.makeText(context, "Please complete all fields.", Toast.LENGTH_SHORT).show();
+            valid = false;
+            fieldsComplete = false;
+        }
+
+        Log.d("superdopetag", this.getStartDate());
+
+        //further validation happens only if all fields are complete
+        if (fieldsComplete) {
+            if (Integer.parseInt(this.getStartDate()) > Integer.parseInt(this.getEndDate())) {
+                Toast.makeText(context, "The course end date should not come before the course start date.", Toast.LENGTH_SHORT).show();
+                valid = false;
+            }
+
+            DatabaseHelper helper = new DatabaseHelper(context);
+
+            //course cannot exist outside the term start/end dates
+            Term termToCheck = helper.getTermById(this.termId);
+
+            Log.d("superdopetag", String.valueOf(Integer.parseInt(termToCheck.getStartDate())));
+            Log.d("superdopetag", String.valueOf(Integer.parseInt(this.getStartDate())));
+
+            if (Integer.parseInt(termToCheck.getStartDate()) > Integer.parseInt(this.getStartDate()) ||
+                    Integer.parseInt(termToCheck.getEndDate()) < Integer.parseInt(this.getEndDate())) {
+                Toast.makeText(context, "The selected course dates are outside the dates of the selected term", Toast.LENGTH_SHORT).show();
+                valid = false;
+            }
+
+            return valid;
+        }
+        return false;
+    }
+
+
     public int getTermId() {
         return termId;
     }

@@ -137,7 +137,7 @@ public class EditAssessmentDialogFragment extends DialogFragment implements View
         ArrayAdapter<String> typeArrayAdapter = new ArrayAdapter<String>(view.getContext(), R.layout.drop_down_item, R.id.drop_down_item_textview, typesAsStrings);
         type.setAdapter(typeArrayAdapter);
 
-        //set up the fields
+        //set up the fields default values
         title.setText(assessmentToModify.getTitle());
         start.setText(assessmentToModify.getStartDate());
         end.setText(assessmentToModify.getEndDate());

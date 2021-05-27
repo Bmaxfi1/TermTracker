@@ -162,7 +162,6 @@ public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase,
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
             }
-
         }
     }
 }

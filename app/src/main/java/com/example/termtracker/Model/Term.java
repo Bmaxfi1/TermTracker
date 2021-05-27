@@ -52,4 +52,26 @@ public class Term extends ScheduledItem implements Validatable {
         }
         return false;
     }
+
+    public boolean isValidEdit(Context context) {
+        boolean valid = true;
+        boolean fieldsComplete = true;
+        if (Objects.equals(this.getTitle(), "") || Objects.equals(this.getStartDate(), "") || Objects.equals(this.getEndDate(), "")) {
+            Toast.makeText(context, "Please complete all fields.", Toast.LENGTH_SHORT).show();
+            valid = false;
+            fieldsComplete = false;
+        }
+
+        //further validation happens only if all fields are complete
+        if (fieldsComplete) {
+            if (Integer.parseInt(this.getStartDate()) > Integer.parseInt(this.getEndDate())) {
+                Toast.makeText(context, "The term end date should not come before the term start date.", Toast.LENGTH_SHORT).show();
+                valid = false;
+            }
+
+            return valid;
+        }
+        return false;
+    }
+
 }

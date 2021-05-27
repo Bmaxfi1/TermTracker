@@ -34,7 +34,7 @@ public class EditTermDialogFragment extends DialogFragment implements View.OnCli
         termToModify.setStartDate(parsedStartDate);
         termToModify.setEndDate(parsedEndDate);
 
-        if (termToModify.isValid(getContext())) {
+        if (termToModify.isValidEdit(getContext())) {
             long idReturned = helper.updateTerm(termToModify);
             Toast.makeText(getContext(), "Modifications to Term #" + idReturned + " saved.", Toast.LENGTH_SHORT).show();
 
