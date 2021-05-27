@@ -7,13 +7,13 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Note implements Validatable{
-    private long id;
+    private int id;
     private String title;
     private String content;
     private LocalDate createDate;
     private long courseId;
 
-    public Note(long id, String title, String content, long courseId) {
+    public Note(int id, String title, String content, long courseId) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -63,11 +63,11 @@ public class Note implements Validatable{
         return true;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

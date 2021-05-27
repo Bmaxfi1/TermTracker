@@ -78,4 +78,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
+    <Button
+        android:id="@+id/edit_term_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:clickable="false"
+        android:text="Save"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/endDate" />
+
+    <Button
+        android:id="@+id/edit_term_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:clickable="false"
+        android:text="Cancel"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/edit_term_save"
+        app:layout_constraintTop_toBottomOf="@+id/endDate" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

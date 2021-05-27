@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,12 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.example.termtracker.Adapters.CoursesRecyclerViewAdapter;
 import com.example.termtracker.Data.DatabaseHelper;
 import com.example.termtracker.Misc.ConfirmationDialogFragment;
 import com.example.termtracker.Misc.OnCourseClickListener;
-import com.example.termtracker.Model.Assessment;
 import com.example.termtracker.Model.Course;
 import com.example.termtracker.Model.Term;
 
@@ -105,20 +104,22 @@ public class TermDetailsActivity extends AppCompatActivity implements Confirmati
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.appbar_edit) {
-            Toast.makeText(getApplicationContext(), "Edit", Toast.LENGTH_SHORT).show();
+            showNewEditDialog();
             return true;
         }
         if (id == R.id.appbar_delete) {
-            Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
+            if (coursesRv.getChildAt(0) == null) {
+                showNewConfirmationDialog();
+            } else {
+                Toast.makeText(getApplicationContext(), "For your safety, terms may not be deleted unless all associated courses are deleted first.", Toast.LENGTH_SHORT).show();
+            }
+
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onConfirmDialogResolved(boolean result) {
 
-    }
 
     public void checkCompletionStatusAndUpdateForm(Term term) {
         if (term.isCompleted()) {
@@ -138,5 +139,27 @@ public class TermDetailsActivity extends AppCompatActivity implements Confirmati
             coursesLeft.setText(String.valueOf(numOfCourses));
         }
     }
+    public void showNewConfirmationDialog() {
+        FragmentManager fm = this.getSupportFragmentManager();
+        ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Are you sure you want to delete this term?", "Confirm", "Cancel");
+        confirmationDialogFragment.show(fm, "term_delete_dialog");  //todo is this right?  not sure why I need this tag.
+    }
 
+    @Override
+    public void onConfirmDialogResolved(boolean result) {
+
+        if (result) {
+            DatabaseHelper helper = new DatabaseHelper(this);
+            helper.deleteTerm(term);
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void showNewEditDialog() {
+        FragmentManager fm = this.getSupportFragmentManager();
+        EditTermDialogFragment editTermDialogFragment = EditTermDialogFragment.newInstance(String.valueOf(term.getId()));
+        editTermDialogFragment.show(fm, "edit_term_dialog");  //todo not sure what the tag is for.
+    }
 }

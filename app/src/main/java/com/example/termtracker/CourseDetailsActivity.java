@@ -1,5 +1,6 @@
 package com.example.termtracker;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -46,8 +47,27 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
     RecyclerView notesRv;
     RecyclerView assessmentsRv;
 
+    //on note back pressed
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+       super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                Bundle bundle = data.getExtras();
+                int courseId = bundle.getInt("courseId");
+
+                DatabaseHelper helper = new DatabaseHelper(this);
+                course = helper.getCourseById(courseId);
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_details);
 
@@ -109,6 +129,10 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
             @Override
             public void onItemClick(Note note) {
                 Toast.makeText(getBaseContext(), "Note Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getBaseContext(), NoteDetailsActivity.class);
+                intent.putExtra("noteId", note.getId());
+                startActivityForResult(intent, 1);
+
 
             }
         }));
@@ -155,6 +179,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
             showNewShareNotesDialog();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

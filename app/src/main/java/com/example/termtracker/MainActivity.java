@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        setCurrentFragment(new HomeFragment());
+        setCurrentFragment(new TermsFragment());
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -84,11 +84,11 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 getSupportActionBar();
                 switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        fragment = new HomeFragment();
-                        setCurrentFragment(fragment);
-                        getSupportActionBar().setTitle("TermTracker");
-                        return true;
+//                    case R.id.nav_home:
+//                        fragment = new HomeFragment();
+//                        setCurrentFragment(fragment);
+//                        getSupportActionBar().setTitle("TermTracker");
+//                        return true;
                     case R.id.nav_terms:
                         fragment = new TermsFragment();
                         setCurrentFragment(fragment);

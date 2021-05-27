@@ -478,6 +478,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return course.getId();
     }
 
+    public long deleteTerm(Term term) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete(TABLE_TERMS, "_id = ?", new String[]{String.valueOf(term.getId())});
+
+        return term.getId();
+    }
+
     public List<CourseInstructor> getAllInstructors() {
         List<CourseInstructor> allInstructors = new ArrayList<CourseInstructor>();
 
@@ -524,6 +532,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return allNotes;
     }
+
+    public Note getNoteById(int id) {
+        Note note;
+
+        String selectQuery = "SELECT * FROM " + TABLE_NOTES;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                note = new Note(
+                        Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        Integer.parseInt(cursor.getString(3))
+                );
+                if (note.getId() == id) {
+                    return note;
+                }
+            } while (cursor.moveToNext());
+        }
+        Log.d("superdopetag", "null object on getNoteById");
+        return null;
+
+    }
+
 
 
     public Boolean sqliteBoolToJavaBool(String i) {

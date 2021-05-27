@@ -67,7 +67,7 @@ public class AddDetailsActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here.
         int id = item.getItemId();
-        if (id == R.id.confirm_button) {
+        if (id == R.id.appbar_confirm) {
             CanBeAddedToDatabase currentFragment = (CanBeAddedToDatabase)getSupportFragmentManager().findFragmentById(R.id.fragment_display_add);
             assert currentFragment != null;
             currentFragment.addNewItem();
