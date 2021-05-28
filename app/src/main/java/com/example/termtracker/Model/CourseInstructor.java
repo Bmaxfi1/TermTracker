@@ -61,4 +61,12 @@ public class CourseInstructor implements Validatable{
         }
         return true;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

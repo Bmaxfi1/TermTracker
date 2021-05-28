@@ -10,9 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.termtracker.Misc.OnCourseClickListener;
-import com.example.termtracker.Misc.OnInstructorDeleteButtonPressedListener;
-import com.example.termtracker.Model.Course;
 import com.example.termtracker.Model.CourseInstructor;
 import com.example.termtracker.R;
 
@@ -22,14 +19,12 @@ import java.util.List;
 // Note that we specify the custom ViewHolder which gives us access to our views
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
-public class InstructorsRecyclerviewAdapter extends RecyclerView.Adapter<InstructorsRecyclerviewAdapter.ViewHolder> {
-
-    List<CourseInstructor> instructorList;
-    private OnInstructorDeleteButtonPressedListener listener;
+public class InstructorsRecyclerviewAdapterReadOnly extends
+        RecyclerView.Adapter<InstructorsRecyclerviewAdapterReadOnly.ViewHolder> {
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder  {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
@@ -50,23 +45,18 @@ public class InstructorsRecyclerviewAdapter extends RecyclerView.Adapter<Instruc
             phoneTextView = (TextView) itemView.findViewById(R.id.instructor_phone);
             emailTextView = (TextView) itemView.findViewById(R.id.instructor_email);
             deleteButton = (Button) itemView.findViewById(R.id.delete_instructor_button);
-
-        }
-        public void bind(final CourseInstructor instructor, final OnInstructorDeleteButtonPressedListener listener) {
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onInstructorDeleteClicked(instructor, getAdapterPosition());
-                }
-            });
-
+            deleteButton.setVisibility(View.INVISIBLE);
+            deleteButton.setClickable(false);
         }
     }
 
-    public InstructorsRecyclerviewAdapter(List<CourseInstructor> instructors, OnInstructorDeleteButtonPressedListener listener) {
+
+    private List<CourseInstructor> instructorList;
+
+    public InstructorsRecyclerviewAdapterReadOnly(List<CourseInstructor> instructors) {
         instructorList = instructors;
-        this.listener = listener;
     }
+
 
     @NonNull
     @Override
@@ -84,7 +74,7 @@ public class InstructorsRecyclerviewAdapter extends RecyclerView.Adapter<Instruc
 
     @Override
     //puts data into the item through holder
-    public void onBindViewHolder(@NonNull InstructorsRecyclerviewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InstructorsRecyclerviewAdapterReadOnly.ViewHolder holder, int position) {
         // Get the data model based on position
         CourseInstructor courseInstructor = instructorList.get(position);
 
@@ -96,8 +86,6 @@ public class InstructorsRecyclerviewAdapter extends RecyclerView.Adapter<Instruc
         textView1.setText(courseInstructor.getPhone());
         textView2.setText(courseInstructor.getEmail());
 
-
-        holder.bind(instructorList.get(position), listener);
     }
 
     @Override
@@ -107,6 +95,5 @@ public class InstructorsRecyclerviewAdapter extends RecyclerView.Adapter<Instruc
         }
         else return -1;
     }
-
 
 }

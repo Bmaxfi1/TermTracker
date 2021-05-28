@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.termtracker.Adapters.AssessmentsRecyclerviewAdapter;
 import com.example.termtracker.Adapters.InstructorsRecyclerviewAdapter;
+import com.example.termtracker.Adapters.InstructorsRecyclerviewAdapterReadOnly;
 import com.example.termtracker.Adapters.NotesRecyclerViewAdapter;
 import com.example.termtracker.Data.DatabaseHelper;
 import com.example.termtracker.Misc.ConfirmationDialogFragment;
@@ -115,7 +116,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
                 allInstructorsInCourse.add(instructor);
             }
         }
-        instructorsRv.setAdapter(new InstructorsRecyclerviewAdapter(allInstructorsInCourse));
+        instructorsRv.setAdapter(new InstructorsRecyclerviewAdapterReadOnly(allInstructorsInCourse));
         instructorsRv.setLayoutManager(new LinearLayoutManager(this));
 
         List<Note> allNotes = helper.getAllNotes();

@@ -454,6 +454,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return course.getId();
     }
 
+    public long updateNote(Note note) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(NOTES_COL_TITLE, note.getTitle());
+        values.put(NOTES_COL_CONTENT, note.getContent());
+
+        db.update(TABLE_NOTES, values, "_id = ?", new String[]{String.valueOf(note.getId())});
+
+        return note.getId();
+    }
+
+    public long deleteNote(Note note) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete(TABLE_NOTES, "_id = ?", new String[]{String.valueOf(note.getId())});
+
+        return note.getId();
+    }
+
+    public long updateInstructor(CourseInstructor instructor) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(INSTRUCTORS_COL_NAME, instructor.getName());
+        values.put(INSTRUCTORS_COL_PHONE, instructor.getPhone());
+        values.put(INSTRUCTORS_COL_EMAIL, instructor.getEmail());
+
+        db.update(TABLE_INSTRUCTORS, values, "_id = ?", new String[]{String.valueOf(instructor.getId())});
+
+        return instructor.getId();
+    }
+
     public long deleteAssessment(Assessment assessment) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -484,6 +517,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_TERMS, "_id = ?", new String[]{String.valueOf(term.getId())});
 
         return term.getId();
+    }
+
+    public long deleteInstructor(CourseInstructor instructor) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete(TABLE_INSTRUCTORS, "_id = ?", new String[]{String.valueOf(instructor.getId())});
+
+        return instructor.getId();
     }
 
     public List<CourseInstructor> getAllInstructors() {

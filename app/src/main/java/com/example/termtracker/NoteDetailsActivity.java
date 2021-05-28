@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -78,10 +79,29 @@ public class NoteDetailsActivity extends AppCompatActivity {
 
         if (id == R.id.appbar_confirm) {
             Toast.makeText(getApplicationContext(), "confirm", Toast.LENGTH_SHORT).show();
+            DatabaseHelper helper = new DatabaseHelper(this);
+
+            Note noteToUpdate = new Note(
+                    note.getId(),
+                    noteTitle.getText().toString(),
+                    noteContent.getText().toString(),
+                    note.getCourseId()
+            );
+
+
+            helper.updateNote(noteToUpdate);
+            Toast.makeText(this, "Note updated.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
             return true;
         }
         if (id == R.id.appbar_delete) {
             Toast.makeText(getApplicationContext(), "delete", Toast.LENGTH_SHORT).show();
+            DatabaseHelper helper = new DatabaseHelper(this);
+            helper.deleteNote(note);
+            Toast.makeText(this, "Note Deleted.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
             return true;
         }
         if (id == R.id.appbar_share) {

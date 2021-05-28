@@ -21,8 +21,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.termtracker.Data.DatabaseHelper;
+import com.example.termtracker.Misc.ConfirmationDialogFragment;
 import com.example.termtracker.Misc.ImplementDatePickerDialog;
 import com.example.termtracker.Misc.InstructorDetailsDialogFragment;
+import com.example.termtracker.Misc.OnInstructorDeleteButtonPressedListener;
 import com.example.termtracker.Model.CanBeAddedToDatabase;
 import com.example.termtracker.Model.Course;
 import com.example.termtracker.Model.CourseInstructor;
@@ -85,7 +87,14 @@ public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase,
         //recyclerview stuff
         courseInstructors = new ArrayList<CourseInstructor>();
         rvCourseInstructors = (RecyclerView) view.findViewById(R.id.instructorsRecyclerView);
-        adapter = new InstructorsRecyclerviewAdapter(courseInstructors);
+        adapter = new InstructorsRecyclerviewAdapter(courseInstructors, new OnInstructorDeleteButtonPressedListener() {
+            @Override
+            public void onInstructorDeleteClicked(CourseInstructor instructor, int position) {
+                Toast.makeText(getContext(), "delete clicked", Toast.LENGTH_SHORT).show();
+                courseInstructors.remove(position);
+                adapter.notifyItemRemoved(position);
+            }
+        });
         rvCourseInstructors.setAdapter(adapter);
         rvCourseInstructors.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -98,6 +107,9 @@ public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase,
             }
         });
     }
+
+
+
 
     private void showNewInstructorDialog() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -114,7 +126,7 @@ public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase,
         courseInstructors.add(courseInstructor);
         Log.d("superdopetag", courseInstructors.get(0).getName());
         Toast.makeText(getActivity(), "Course Instructor " + newName + " added.", Toast.LENGTH_SHORT).show();
-        adapter.notifyItemInserted(0);
+        adapter.notifyItemInserted(courseInstructors.size() - 1);
     }
 
     @Override

@@ -111,7 +111,7 @@ public class TermDetailsActivity extends AppCompatActivity implements Confirmati
             if (coursesRv.getChildAt(0) == null) {
                 showNewConfirmationDialog();
             } else {
-                Toast.makeText(getApplicationContext(), "For your safety, terms may not be deleted unless all associated courses are deleted first.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "For your safety, terms may not be deleted unless all associated courses are deleted first.", Toast.LENGTH_LONG).show();
             }
 
             return true;

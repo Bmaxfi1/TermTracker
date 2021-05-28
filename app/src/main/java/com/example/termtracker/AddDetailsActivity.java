@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,13 @@ import android.widget.Toast;
 import com.example.termtracker.Model.CanBeAddedToDatabase;
 
 public class AddDetailsActivity extends AppCompatActivity{
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        finish();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +41,18 @@ public class AddDetailsActivity extends AppCompatActivity{
 
             switch (value) {
                 case "note":
-                    Toast.makeText(getApplicationContext(), "passed note into addDetails", Toast.LENGTH_SHORT).show();
                     ab.setTitle("New Note");
                     setCurrentFragment(new AddNoteFragment());
                     break;
                 case "assessment":
-                    Toast.makeText(getApplicationContext(), "passed assessment into addDetails", Toast.LENGTH_SHORT).show();
                     ab.setTitle("New Assessment");
                     setCurrentFragment(new AddAssessmentFragment());
                     break;
                 case "course":
-                    Toast.makeText(getApplicationContext(), "passed course into addDetails", Toast.LENGTH_SHORT).show();
                     ab.setTitle("New Course");
                     setCurrentFragment(new AddCourseFragment());
                     break;
                 case "term":
-                    Toast.makeText(getApplicationContext(), "passed term into addDetails", Toast.LENGTH_SHORT).show();
                     ab.setTitle("New Term");
                     setCurrentFragment(new AddTermFragment());
                     break;

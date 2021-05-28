@@ -20,6 +20,9 @@ import java.util.List;
 
 public class CoursesRecyclerViewAdapter extends RecyclerView.Adapter<CoursesRecyclerViewAdapter.ViewHolder> {
 
+    private List<Course> courseList;
+    private OnCourseClickListener listener;
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTextView;
         public TextView startTextView;
@@ -47,8 +50,7 @@ public class CoursesRecyclerViewAdapter extends RecyclerView.Adapter<CoursesRecy
         }
     }
 
-    private List<Course> courseList;
-    private OnCourseClickListener listener;
+
 
     public CoursesRecyclerViewAdapter(List<Course> courses, OnCourseClickListener listener) {
         this.listener = listener;

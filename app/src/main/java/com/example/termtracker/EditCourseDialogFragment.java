@@ -2,6 +2,7 @@ package com.example.termtracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.termtracker.Adapters.InstructorsRecyclerviewAdapter;
 import com.example.termtracker.Data.DatabaseHelper;
 import com.example.termtracker.Misc.ImplementDatePickerDialog;
+import com.example.termtracker.Misc.InstructorDetailsDialogFragment;
+import com.example.termtracker.Misc.OnInstructorDeleteButtonPressedListener;
+import com.example.termtracker.Model.CanBeAddedToDatabase;
 import com.example.termtracker.Model.Course;
 import com.example.termtracker.Model.CourseInstructor;
 import com.example.termtracker.Model.Term;
@@ -27,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EditCourseDialogFragment extends DialogFragment implements View.OnClickListener {
+public class EditCourseDialogFragment extends DialogFragment implements View.OnClickListener, InstructorDetailsDialogFragment.InstructorDetailsDialogFragmentListener, CanBeAddedToDatabase {
     private Course courseToModify;
 
     private DatabaseHelper helper;
@@ -37,6 +42,8 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
     public EditText title, start, end;
     public Spinner term;
     public RecyclerView instructorsRv;
+
+    public InstructorsRecyclerviewAdapter adapter;
 
     @Override
     public void onClick(View v) {
@@ -49,12 +56,12 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
         courseToModify.setTermId(helper.getTermByName(term.getSelectedItem().toString()).getId());
 
         if (courseToModify.isValidEdit(getContext())) {
-            long idReturned = helper.updateCourse(courseToModify);
-            Toast.makeText(getContext(), "Modifications to Course #" + idReturned + " saved.", Toast.LENGTH_SHORT).show();
-
-            dismiss();
-            Intent intent = new Intent(v.getContext(), MainActivity.class);
-            startActivity(intent);
+            addNewItem();
+//            Toast.makeText(getContext(), "Modifications saved.", Toast.LENGTH_SHORT).show();
+//
+//            dismiss();
+//            Intent intent = new Intent(v.getContext(), MainActivity.class);
+//            startActivity(intent);
         }
     }
 
@@ -91,6 +98,8 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
 
         helper = new DatabaseHelper(view.getContext());
 
+        instructors = new ArrayList<>();
+
         int id = Integer.parseInt(getArguments().getString("id"));
         courseToModify = helper.getCourseById(id);
 
@@ -113,7 +122,24 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
         start.setText(courseToModify.getStartDate());
         end.setText(courseToModify.getEndDate());
         term.setSelection(0); //selects the duplicate string from earlier.
-        // todo instructorsRv.setAdapter(InstructorsRecyclerviewAdapter);
+
+        //sets up the list of existing instructors
+        List<CourseInstructor> allInstructors = helper.getAllInstructors();
+        for (CourseInstructor courseInstructor: allInstructors) {
+            if (courseInstructor.getCourseId() == courseToModify.getId()) {
+                instructors.add(courseInstructor);
+            };
+        }
+
+        adapter = new InstructorsRecyclerviewAdapter(instructors, new OnInstructorDeleteButtonPressedListener() {
+            @Override
+            public void onInstructorDeleteClicked(CourseInstructor instructor, int position) {
+                instructors.remove(position);
+                adapter.notifyItemRemoved(position);
+            }
+        });
+        instructorsRv.setAdapter(adapter);
+        instructorsRv.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         save.setClickable(true);
         save.setVisibility(View.VISIBLE);
@@ -123,4 +149,67 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
         save.setOnClickListener(this);
 
     }
+
+    @Override
+    public void onSaveInstructor(String newName, String newPhone, String newEmail) {
+        //add new frag item
+        CourseInstructor courseInstructor = new CourseInstructor(-1, newName, newPhone, newEmail, -1);
+        instructors.add(courseInstructor);
+        Toast.makeText(getActivity(), "Course Instructor " + newName + " added.", Toast.LENGTH_SHORT).show();
+        adapter.notifyItemInserted(instructors.size() - 1);
+    }
+
+    @Override
+    public void addNewItem() {
+        View view = getView();
+        EditText titleEditText = (EditText) view.findViewById(R.id.course_title);
+        EditText startEditText = (EditText) view.findViewById(R.id.course_start_date);
+        EditText endEditText = (EditText) view.findViewById(R.id.course_end_date);
+        Spinner termSpinner = (Spinner) view.findViewById(R.id.term_spinner);
+
+        String parsedStartDate = startEditText.getText().toString().replaceAll("[^0-9.]", "");
+        String parsedEndDate = endEditText.getText().toString().replaceAll("[^0-9.]", "");
+
+        DatabaseHelper helper = new DatabaseHelper(view.getContext());
+        Term term = helper.getTermByName(termSpinner.getSelectedItem().toString());
+
+        Course courseToEdit = new Course(courseToModify.getId(),
+                titleEditText.getText().toString(),
+                parsedStartDate,
+                parsedEndDate,
+                false,
+                true,
+                term.getId());
+        if (courseToEdit.isValidEdit(getContext())) {
+            long idReturned = helper.updateCourse(courseToEdit);
+            if (idReturned < 0) {
+                Toast.makeText(view.getContext(), "Something went wrong with the query.  Course not modified.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(view.getContext(), "Course modified.  ID: " + idReturned, Toast.LENGTH_SHORT).show();
+
+
+                //delete old copies of instructors
+                List<CourseInstructor> allInstructors = helper.getAllInstructors();
+                for (CourseInstructor courseInstructor: allInstructors) {
+                    if (courseInstructor.getCourseId() == courseToEdit.getId()) {
+                        helper.deleteInstructor(courseInstructor);
+                    }
+                }
+
+                //add course instructors
+                for (CourseInstructor instructor: instructors) {
+                    instructor.setCourseId(idReturned);
+                    long instructorIdReturned = helper.addInstructor(instructor);
+                    if (instructorIdReturned < 0) {
+                        Toast.makeText(view.getContext(), "Something went wrong with the query.  Instructor not modified.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        //Toast.makeText(view.getContext(), "Instructor added to CourseID: " + idReturned + ".  Instructor ID: " + instructorIdReturned, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
+
 }
