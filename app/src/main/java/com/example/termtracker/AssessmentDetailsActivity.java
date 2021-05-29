@@ -16,8 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.termtracker.Data.DatabaseHelper;
-import com.example.termtracker.Misc.ConfirmationDialogFragment;
-import com.example.termtracker.Misc.EditAssessmentDialogFragment;
+import com.example.termtracker.Dialogs.ConfirmationDialogFragment;
+import com.example.termtracker.Misc.DateTools;
+import com.example.termtracker.Dialogs.EditAssessmentDialogFragment;
 import com.example.termtracker.Model.Assessment;
 
 public class AssessmentDetailsActivity extends AppCompatActivity implements ConfirmationDialogFragment.ConfirmationDialogFragmentListener {
@@ -65,8 +66,8 @@ public class AssessmentDetailsActivity extends AppCompatActivity implements Conf
         DatabaseHelper helper = new DatabaseHelper(this);
 
         assessmentTitle.setText(assessment.getTitle());
-        assessmentStart.setText(assessment.getStartDate());
-        assessmentEnd.setText(assessment.getEndDate());
+        assessmentStart.setText(DateTools.addHyphensToDate(assessment.getStartDate()));
+        assessmentEnd.setText(DateTools.addHyphensToDate(assessment.getEndDate()));
         assessmentType.setText(assessment.getAssessmentType().toString());
         assessmentCourseName.setText(helper.getCourseById((int) assessment.getCourseId()).getTitle());
 

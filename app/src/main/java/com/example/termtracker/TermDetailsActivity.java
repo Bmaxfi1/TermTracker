@@ -18,8 +18,10 @@ import android.widget.Toast;
 
 import com.example.termtracker.Adapters.CoursesRecyclerViewAdapter;
 import com.example.termtracker.Data.DatabaseHelper;
-import com.example.termtracker.Misc.ConfirmationDialogFragment;
-import com.example.termtracker.Misc.OnCourseClickListener;
+import com.example.termtracker.Dialogs.EditTermDialogFragment;
+import com.example.termtracker.Dialogs.ConfirmationDialogFragment;
+import com.example.termtracker.Misc.DateTools;
+import com.example.termtracker.Listeners.OnCourseClickListener;
 import com.example.termtracker.Model.Course;
 import com.example.termtracker.Model.Term;
 
@@ -71,8 +73,8 @@ public class TermDetailsActivity extends AppCompatActivity implements Confirmati
         DatabaseHelper helper = new DatabaseHelper(this);
 
         termTitle.setText(term.getTitle());
-        termStart.setText(term.getStartDate());
-        termEnd.setText(term.getEndDate());
+        termStart.setText(DateTools.addHyphensToDate(term.getStartDate()));
+        termEnd.setText(DateTools.addHyphensToDate(term.getEndDate()));
 
         checkCompletionStatusAndUpdateForm(term);
 

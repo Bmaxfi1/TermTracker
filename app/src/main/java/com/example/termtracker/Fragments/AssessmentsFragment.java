@@ -1,6 +1,5 @@
-package com.example.termtracker;
+package com.example.termtracker.Fragments;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,14 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.termtracker.AssessmentDetailsActivity;
 import com.example.termtracker.Data.DatabaseHelper;
-import com.example.termtracker.Misc.OnAssessmentClickListener;
+import com.example.termtracker.Listeners.OnAssessmentClickListener;
 import com.example.termtracker.Model.Assessment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.termtracker.Adapters.AssessmentsRecyclerviewAdapter;
+import com.example.termtracker.R;
 
 public class AssessmentsFragment extends Fragment {
 

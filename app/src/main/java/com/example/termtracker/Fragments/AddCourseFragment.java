@@ -1,4 +1,4 @@
-package com.example.termtracker;
+package com.example.termtracker.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,10 +21,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.termtracker.Data.DatabaseHelper;
-import com.example.termtracker.Misc.ConfirmationDialogFragment;
-import com.example.termtracker.Misc.ImplementDatePickerDialog;
-import com.example.termtracker.Misc.InstructorDetailsDialogFragment;
-import com.example.termtracker.Misc.OnInstructorDeleteButtonPressedListener;
+import com.example.termtracker.MainActivity;
+import com.example.termtracker.Dialogs.ImplementDatePickerDialog;
+import com.example.termtracker.Dialogs.InstructorDetailsDialogFragment;
+import com.example.termtracker.Listeners.OnInstructorDeleteButtonPressedListener;
 import com.example.termtracker.Model.CanBeAddedToDatabase;
 import com.example.termtracker.Model.Course;
 import com.example.termtracker.Model.CourseInstructor;
@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.example.termtracker.Adapters.InstructorsRecyclerviewAdapter;
+import com.example.termtracker.R;
 
 public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase, InstructorDetailsDialogFragment.InstructorDetailsDialogFragmentListener {
 

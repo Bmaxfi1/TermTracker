@@ -11,7 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.termtracker.Data.DatabaseHelper;
-import com.example.termtracker.Misc.OnCourseClickListener;
+import com.example.termtracker.Misc.DateTools;
+import com.example.termtracker.Listeners.OnCourseClickListener;
 import com.example.termtracker.Model.Assessment;
 import com.example.termtracker.Model.Course;
 import com.example.termtracker.R;
@@ -79,8 +80,8 @@ public class CoursesRecyclerViewAdapter extends RecyclerView.Adapter<CoursesRecy
         ImageView starView = holder.starImageView;
 
         titleView.setText(course.getTitle());
-        startView.setText(course.getStartDate());
-        endView.setText(course.getEndDate());
+        startView.setText(DateTools.addHyphensToDate(course.getStartDate()));
+        endView.setText(DateTools.addHyphensToDate(course.getEndDate()));
 
         //get assessments left and assign it to the view
         DatabaseHelper helper = new DatabaseHelper(leftView.getContext());

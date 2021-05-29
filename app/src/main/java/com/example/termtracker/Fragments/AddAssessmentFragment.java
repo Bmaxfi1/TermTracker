@@ -1,4 +1,4 @@
-package com.example.termtracker;
+package com.example.termtracker.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +16,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.termtracker.Data.DatabaseHelper;
-import com.example.termtracker.Misc.ImplementDatePickerDialog;
+import com.example.termtracker.MainActivity;
+import com.example.termtracker.Dialogs.ImplementDatePickerDialog;
 import com.example.termtracker.Model.Assessment;
 import com.example.termtracker.Model.AssessmentType;
 import com.example.termtracker.Model.CanBeAddedToDatabase;
 import com.example.termtracker.Model.Course;
+import com.example.termtracker.R;
 
 import java.util.ArrayList;
 import java.util.Collections;

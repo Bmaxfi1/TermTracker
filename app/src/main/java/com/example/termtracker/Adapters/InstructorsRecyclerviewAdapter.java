@@ -10,9 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.termtracker.Misc.OnCourseClickListener;
-import com.example.termtracker.Misc.OnInstructorDeleteButtonPressedListener;
-import com.example.termtracker.Model.Course;
+import com.example.termtracker.Listeners.OnInstructorDeleteButtonPressedListener;
 import com.example.termtracker.Model.CourseInstructor;
 import com.example.termtracker.R;
 

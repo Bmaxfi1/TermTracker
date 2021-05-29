@@ -1,4 +1,4 @@
-package com.example.termtracker.Misc;
+package com.example.termtracker.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;

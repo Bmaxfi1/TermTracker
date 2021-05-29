@@ -1,4 +1,4 @@
-package com.example.termtracker.Misc;
+package com.example.termtracker.Dialogs;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.termtracker.Data.DatabaseHelper;
 import com.example.termtracker.MainActivity;
+import com.example.termtracker.Misc.DateTools;
 import com.example.termtracker.Model.Assessment;
 import com.example.termtracker.Model.AssessmentType;
 import com.example.termtracker.Model.Course;
@@ -139,8 +140,8 @@ public class EditAssessmentDialogFragment extends DialogFragment implements View
 
         //set up the fields default values
         title.setText(assessmentToModify.getTitle());
-        start.setText(assessmentToModify.getStartDate());
-        end.setText(assessmentToModify.getEndDate());
+        start.setText(DateTools.addHyphensToDate(assessmentToModify.getStartDate()));
+        end.setText(DateTools.addHyphensToDate(assessmentToModify.getEndDate()));
         type.setSelection(assessmentToModify.getAssessmentType().ordinal());
         coursePicker.setSelection(0); //gets the duplicate course name from earlier.
 

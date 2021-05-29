@@ -1,4 +1,4 @@
-package com.example.termtracker;
+package com.example.termtracker.Dialogs;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.termtracker.Data.DatabaseHelper;
-import com.example.termtracker.Misc.ImplementDatePickerDialog;
+import com.example.termtracker.MainActivity;
+import com.example.termtracker.Misc.DateTools;
 import com.example.termtracker.Model.Term;
+import com.example.termtracker.R;
 
 public class EditTermDialogFragment extends DialogFragment implements View.OnClickListener {
 
@@ -77,8 +79,8 @@ public class EditTermDialogFragment extends DialogFragment implements View.OnCli
         ImplementDatePickerDialog.assign(view, end);
 
         title.setText(termToModify.getTitle());
-        start.setText(termToModify.getStartDate());
-        end.setText(termToModify.getEndDate());
+        start.setText(DateTools.addHyphensToDate(termToModify.getStartDate()));
+        end.setText(DateTools.addHyphensToDate(termToModify.getEndDate()));
 
         save.setClickable(true);
         save.setVisibility(View.VISIBLE);

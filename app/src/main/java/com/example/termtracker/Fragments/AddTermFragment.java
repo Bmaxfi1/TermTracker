@@ -1,4 +1,4 @@
-package com.example.termtracker;
+package com.example.termtracker.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +14,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.termtracker.Data.DatabaseHelper;
-import com.example.termtracker.Misc.ImplementDatePickerDialog;
+import com.example.termtracker.MainActivity;
+import com.example.termtracker.Dialogs.ImplementDatePickerDialog;
 import com.example.termtracker.Model.CanBeAddedToDatabase;
 import com.example.termtracker.Model.Term;
+import com.example.termtracker.R;
 
 public class AddTermFragment extends Fragment implements CanBeAddedToDatabase {
 

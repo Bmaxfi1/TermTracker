@@ -6,13 +6,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.termtracker.Fragments.AddTermFragment;
 import com.example.termtracker.Model.CanBeAddedToDatabase;
+
+import com.example.termtracker.Fragments.AddAssessmentFragment;
+import com.example.termtracker.Fragments.AddCourseFragment;
+import com.example.termtracker.Fragments.AddNoteFragment;
 
 public class AddDetailsActivity extends AppCompatActivity{
 

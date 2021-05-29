@@ -17,13 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.termtracker.Adapters.AssessmentsRecyclerviewAdapter;
-import com.example.termtracker.Adapters.InstructorsRecyclerviewAdapter;
 import com.example.termtracker.Adapters.InstructorsRecyclerviewAdapterReadOnly;
 import com.example.termtracker.Adapters.NotesRecyclerViewAdapter;
 import com.example.termtracker.Data.DatabaseHelper;
-import com.example.termtracker.Misc.ConfirmationDialogFragment;
-import com.example.termtracker.Misc.OnAssessmentClickListener;
-import com.example.termtracker.Misc.OnNoteClickListener;
+import com.example.termtracker.Dialogs.EditCourseDialogFragment;
+import com.example.termtracker.Dialogs.ConfirmationDialogFragment;
+import com.example.termtracker.Misc.DateTools;
+import com.example.termtracker.Listeners.OnAssessmentClickListener;
+import com.example.termtracker.Listeners.OnNoteClickListener;
 import com.example.termtracker.Model.Assessment;
 import com.example.termtracker.Model.Course;
 import com.example.termtracker.Model.CourseInstructor;
@@ -102,8 +103,8 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
         DatabaseHelper helper = new DatabaseHelper(this);
 
         courseTitle.setText(course.getTitle());
-        courseStart.setText(course.getStartDate());
-        courseEnd.setText(course.getEndDate());
+        courseStart.setText(DateTools.addHyphensToDate(course.getStartDate()));
+        courseEnd.setText(DateTools.addHyphensToDate(course.getEndDate()));
         courseTerm.setText(helper.getTermById(course.getTermId()).getTitle());
 
         checkCompletionStatusAndUpdateForm(course);

@@ -11,7 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.termtracker.Data.DatabaseHelper;
-import com.example.termtracker.Misc.OnTermClickListener;
+import com.example.termtracker.Misc.DateTools;
+import com.example.termtracker.Listeners.OnTermClickListener;
 import com.example.termtracker.Model.Course;
 import com.example.termtracker.Model.Term;
 import com.example.termtracker.R;
@@ -80,8 +81,8 @@ public class TermsRecyclerViewAdapter extends RecyclerView.Adapter<TermsRecycler
         ImageView starView = holder.starImageView;
 
         titleView.setText(term.getTitle());
-        startView.setText(term.getStartDate());
-        endView.setText(term.getEndDate());
+        startView.setText(DateTools.addHyphensToDate(term.getStartDate()));
+        endView.setText(DateTools.addHyphensToDate(term.getEndDate()));
 
         //get num courses left
         DatabaseHelper helper = new DatabaseHelper(leftView.getContext());

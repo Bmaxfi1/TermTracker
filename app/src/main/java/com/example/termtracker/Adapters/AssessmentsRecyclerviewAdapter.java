@@ -10,7 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.termtracker.Misc.OnAssessmentClickListener;
+import com.example.termtracker.Misc.DateTools;
+import com.example.termtracker.Listeners.OnAssessmentClickListener;
 import com.example.termtracker.Model.Assessment;
 import com.example.termtracker.R;
 
@@ -94,8 +95,8 @@ public class AssessmentsRecyclerviewAdapter extends
         ImageView imageView = holder.starImageView;
 
         textView.setText(assessment.getTitle());
-        textView1.setText(assessment.getStartDate());
-        textView2.setText(assessment.getEndDate());
+        textView1.setText(DateTools.addHyphensToDate(assessment.getStartDate()));
+        textView2.setText(DateTools.addHyphensToDate(assessment.getEndDate()));
 
         //set gold star image
         if (assessment.isCompleted()) {

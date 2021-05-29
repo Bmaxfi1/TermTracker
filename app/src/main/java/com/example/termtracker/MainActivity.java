@@ -7,13 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.example.termtracker.Model.Assessment;
-import com.example.termtracker.Model.ScheduledItem;
+import com.example.termtracker.Fragments.AssessmentsFragment;
+import com.example.termtracker.Fragments.CoursesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.termtracker.Fragments.TermsFragment;
 
 /**
  * @author Brandon Maxfield
@@ -97,17 +98,14 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_terms:
                         fragment = new TermsFragment();
                         setCurrentFragment(fragment);
-                        getSupportActionBar().setTitle("Terms");
                         return true;
                     case R.id.nav_courses:
                         fragment = new CoursesFragment();
                         setCurrentFragment(fragment);
-                        getSupportActionBar().setTitle("Courses");
                         return true;
                     case R.id.nav_assessments:
                         fragment = new AssessmentsFragment();
                         setCurrentFragment(fragment);
-                        getSupportActionBar().setTitle("Assessments");
                         return true;
 
                 }

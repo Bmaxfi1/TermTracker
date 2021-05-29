@@ -244,7 +244,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         Log.d("superdopetag", "null object on getCourseById");
         return null;
-
     }
 
     public Course getCourseByName(String title) {

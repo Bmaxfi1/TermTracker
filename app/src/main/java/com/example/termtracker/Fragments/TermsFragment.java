@@ -1,4 +1,4 @@
-package com.example.termtracker;
+package com.example.termtracker.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +15,10 @@ import android.view.ViewGroup;
 
 import com.example.termtracker.Adapters.TermsRecyclerViewAdapter;
 import com.example.termtracker.Data.DatabaseHelper;
-import com.example.termtracker.Misc.OnTermClickListener;
+import com.example.termtracker.Listeners.OnTermClickListener;
 import com.example.termtracker.Model.Term;
+import com.example.termtracker.R;
+import com.example.termtracker.TermDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;

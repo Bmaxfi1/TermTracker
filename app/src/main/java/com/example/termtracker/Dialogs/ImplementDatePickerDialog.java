@@ -1,4 +1,4 @@
-package com.example.termtracker.Misc;
+package com.example.termtracker.Dialogs;
 
 import android.app.DatePickerDialog;
 import android.view.View;

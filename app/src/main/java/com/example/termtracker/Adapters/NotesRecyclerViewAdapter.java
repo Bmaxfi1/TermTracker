@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.termtracker.Misc.OnNoteClickListener;
+import com.example.termtracker.Listeners.OnNoteClickListener;
 import com.example.termtracker.Model.Note;
 import com.example.termtracker.R;
 

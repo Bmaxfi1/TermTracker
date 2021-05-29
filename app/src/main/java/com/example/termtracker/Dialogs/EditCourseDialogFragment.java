@@ -1,8 +1,7 @@
-package com.example.termtracker;
+package com.example.termtracker.Dialogs;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.termtracker.Adapters.InstructorsRecyclerviewAdapter;
 import com.example.termtracker.Data.DatabaseHelper;
-import com.example.termtracker.Misc.ImplementDatePickerDialog;
-import com.example.termtracker.Misc.InstructorDetailsDialogFragment;
-import com.example.termtracker.Misc.OnInstructorDeleteButtonPressedListener;
+import com.example.termtracker.MainActivity;
+import com.example.termtracker.Misc.DateTools;
+import com.example.termtracker.Listeners.OnInstructorDeleteButtonPressedListener;
 import com.example.termtracker.Model.CanBeAddedToDatabase;
 import com.example.termtracker.Model.Course;
 import com.example.termtracker.Model.CourseInstructor;
 import com.example.termtracker.Model.Term;
+import com.example.termtracker.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,6 +47,7 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
 
     @Override
     public void onClick(View v) {
+
         String parsedStartDate = start.getText().toString().replaceAll("[^0-9.]", "");
         String parsedEndDate = end.getText().toString().replaceAll("[^0-9.]", "");
 
@@ -119,8 +120,8 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
         term.setAdapter(termArrayAdapter);
 
         title.setText(courseToModify.getTitle());
-        start.setText(courseToModify.getStartDate());
-        end.setText(courseToModify.getEndDate());
+        start.setText(DateTools.addHyphensToDate(courseToModify.getStartDate()));
+        end.setText(DateTools.addHyphensToDate(courseToModify.getEndDate()));
         term.setSelection(0); //selects the duplicate string from earlier.
 
         //sets up the list of existing instructors
