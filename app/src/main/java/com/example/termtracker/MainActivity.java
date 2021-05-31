@@ -3,29 +3,50 @@ package com.example.termtracker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.termtracker.Fragments.AssessmentsFragment;
 import com.example.termtracker.Fragments.CoursesFragment;
+import com.example.termtracker.Misc.Notifications;
+import com.example.termtracker.Misc.Receiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.termtracker.Fragments.TermsFragment;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
+
+import static androidx.core.content.ContextCompat.getSystemService;
+
 /**
  * @author Brandon Maxfield
- *
+ * <p>
  * FUTURE ENHANCEMENTS
  * 1. When adding a note or assessment, allow user to filter classes by term.
- *
  */
 
 
 public class MainActivity extends AppCompatActivity {
+
+
+    private static final String CHANNEL_ID = "MyNotificationChannel";
+
 
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
@@ -47,10 +68,15 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        createNotificationChannel();
+        setupNotifications();
+
     }
 
     //changes the fragment that is on display
-    public void setCurrentFragment(Fragment fragment){
+    public void setCurrentFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_display, fragment);
         transaction.addToBackStack(null);
@@ -111,4 +137,39 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             };
+
+    public void setupNotifications(){
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 10);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        if (calendar.getTime().compareTo(new Date()) < 0)
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+
+        Intent intent = new Intent(getApplicationContext(), Receiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        if (alarmManager != null) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+        }
+
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "myChannelName", importance);
+            channel.setDescription("myChannelDescription");
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 }
