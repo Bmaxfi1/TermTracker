@@ -66,7 +66,7 @@ public class AddTermFragment extends Fragment implements CanBeAddedToDatabase {
             if (idReturned < 0) {
                 Toast.makeText(view.getContext(), "Something went wrong with the query.  Term not added.", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(view.getContext(), "Term Added.  ID: " + idReturned, Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Term Added.  Title: " + termToAdd.getTitle(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
             }

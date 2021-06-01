@@ -73,7 +73,6 @@ public class AssessmentsFragment extends Fragment {
         incompleteAssessmentsRV.setAdapter(new AssessmentsRecyclerviewAdapter(incompleteAssessments, new OnAssessmentClickListener() {
             @Override
             public void onItemClick(Assessment assessment) {
-                Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
                 launchAssessmentDetails(assessment);
             }
         }));
@@ -83,7 +82,6 @@ public class AssessmentsFragment extends Fragment {
         completeAssessmentsRV.setAdapter(new AssessmentsRecyclerviewAdapter(completeAssessments, new OnAssessmentClickListener() {
             @Override
             public void onItemClick(Assessment assessment) {
-                Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
                 launchAssessmentDetails(assessment);
             }
         }));

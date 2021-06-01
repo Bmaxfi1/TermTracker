@@ -190,7 +190,7 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
             if (idReturned < 0) {
                 Toast.makeText(view.getContext(), "Something went wrong with the query.  Course not modified.", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(view.getContext(), "Course modified.  ID: " + idReturned, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Modifications to course '" + courseToModify.getTitle() + "' saved.", Toast.LENGTH_SHORT).show();
 
 
                 //delete old copies of instructors

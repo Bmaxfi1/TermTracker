@@ -52,7 +52,7 @@ public class EditAssessmentDialogFragment extends DialogFragment implements View
 
         if (assessmentToModify.isValid(getContext()) && v.getId() == R.id.assessment_save_button) {
             long idReturned = helper.updateAssessment(assessmentToModify);
-            Toast.makeText(getContext(), "Modifications to Appointment #" + idReturned + " saved.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Modifications to assessment '" + assessmentToModify.getTitle() + "' saved.", Toast.LENGTH_SHORT).show();
 
 
 

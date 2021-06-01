@@ -110,7 +110,7 @@ public class AddAssessmentFragment extends Fragment implements CanBeAddedToDatab
             if (idReturned < 0) {
                 Toast.makeText(view.getContext(), "Something went wrong with the query.  Assessment not added.", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(view.getContext(), "Assessment added.  ID: " + idReturned, Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Assessment added.  Title: " + assessmentToAdd.getTitle(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
             }

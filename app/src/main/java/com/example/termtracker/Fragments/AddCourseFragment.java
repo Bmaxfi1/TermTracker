@@ -156,7 +156,7 @@ public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase,
             if (idReturned < 0) {
                 Toast.makeText(view.getContext(), "Something went wrong with the query.  Course not added.", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(view.getContext(), "Course added.  ID: " + idReturned, Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Course added.  Title: " + courseToAdd.getTitle(), Toast.LENGTH_SHORT).show();
 
 
                 //add course instructors
@@ -166,7 +166,7 @@ public class AddCourseFragment extends Fragment implements CanBeAddedToDatabase,
                     if (instructorIdReturned < 0) {
                         Toast.makeText(view.getContext(), "Something went wrong with the query.  Instructor not added.", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(view.getContext(), "Instructor added to CourseID: " + idReturned + ".  Instructor ID: " + instructorIdReturned, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "Instructor '" + instructor.getName() + "' added to course '" + courseToAdd.getTitle() +"'.", Toast.LENGTH_SHORT).show();
                     }
 
 

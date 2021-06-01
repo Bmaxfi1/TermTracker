@@ -168,17 +168,14 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.appbar_edit) {
-            Toast.makeText(getApplicationContext(), "Edit", Toast.LENGTH_SHORT).show();
             showNewEditDialog();
             return true;
         }
         if (id == R.id.appbar_delete) {
-            Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
             showNewConfirmationDialog();
             return true;
         }
         if (id == R.id.appbar_share) {
-            Toast.makeText(getApplicationContext(), "Share", Toast.LENGTH_SHORT).show();
             showNewShareNotesDialog();
             return true;
         }
@@ -222,6 +219,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
         if (result) {
             DatabaseHelper helper = new DatabaseHelper(this);
             helper.deleteCourse(course);
+            Toast.makeText(this, "Course '" + course.getTitle() + "' deleted.", Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

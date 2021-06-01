@@ -72,7 +72,6 @@ public class CoursesFragment extends Fragment {
         incompleteCoursesRv.setAdapter(new CoursesRecyclerViewAdapter(incompleteCourses, new OnCourseClickListener() {
             @Override
             public void onItemClick(Course course) {
-                Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
                 launchCourseDetails(course);
             }
         }));
@@ -82,7 +81,6 @@ public class CoursesFragment extends Fragment {
         completeCoursesRv.setAdapter(new CoursesRecyclerViewAdapter(completeCourses, new OnCourseClickListener() {
             @Override
             public void onItemClick(Course course) {
-                Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
                 launchCourseDetails(course);
             }
         }));

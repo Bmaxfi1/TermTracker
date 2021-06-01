@@ -113,7 +113,7 @@ public class TermDetailsActivity extends AppCompatActivity implements Confirmati
             if (coursesRv.getChildAt(0) == null) {
                 showNewConfirmationDialog();
             } else {
-                Toast.makeText(getApplicationContext(), "For your safety, terms may not be deleted unless all associated courses are deleted first.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "For your safety, terms may not be deleted unless all associated courses are removed first.", Toast.LENGTH_LONG).show();
             }
 
             return true;
@@ -153,6 +153,8 @@ public class TermDetailsActivity extends AppCompatActivity implements Confirmati
         if (result) {
             DatabaseHelper helper = new DatabaseHelper(this);
             helper.deleteTerm(term);
+            Toast.makeText(this, "Term '" + term.getTitle() + "' deleted.", Toast.LENGTH_SHORT).show();
+
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

@@ -81,7 +81,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity implements Conf
                 if (assessment.isCompleted()) {
                     assessment.setCompleted(false);
                     long idReturned = helper.updateAssessment(assessment);
-                    Toast.makeText(v.getContext(), "Assessment #" + idReturned + "updated.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "Assessment #" + idReturned + " updated.", Toast.LENGTH_SHORT).show();
                 } else {
                     assessment.setCompleted(true);
                     long idReturned = helper.updateAssessment(assessment);
@@ -108,12 +108,10 @@ public class AssessmentDetailsActivity extends AppCompatActivity implements Conf
         //noinspection SimplifiableIfStatement
         // Display menu item's title by using a Toast.
         if (id == R.id.appbar_edit) {
-            Toast.makeText(getApplicationContext(), "Edit", Toast.LENGTH_SHORT).show();
             showNewEditDialog();
             return true;
         }
         if (id == R.id.appbar_delete) {
-            Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
             showNewConfirmationDialog();
             return true;
         }
@@ -150,6 +148,8 @@ public class AssessmentDetailsActivity extends AppCompatActivity implements Conf
         if (result) {
             DatabaseHelper helper = new DatabaseHelper(this);
             helper.deleteAssessment(assessment);
+            Toast.makeText(this, "Assessment '" + assessment.getTitle() + "' deleted.", Toast.LENGTH_SHORT).show();
+
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

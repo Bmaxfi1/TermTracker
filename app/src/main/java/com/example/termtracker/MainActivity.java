@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         // Display menu item's title by using a Toast.
         if (id == R.id.appbar_add) {
-            Toast.makeText(getApplicationContext(), "Add", Toast.LENGTH_SHORT).show();
             launchAddActivity();
             return true;
         }

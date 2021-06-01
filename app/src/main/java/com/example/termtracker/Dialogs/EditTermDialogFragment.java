@@ -38,7 +38,7 @@ public class EditTermDialogFragment extends DialogFragment implements View.OnCli
 
         if (termToModify.isValidEdit(getContext()) && v.getId() == R.id.edit_term_save) {
             long idReturned = helper.updateTerm(termToModify);
-            Toast.makeText(getContext(), "Modifications to Term #" + idReturned + " saved.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Modifications to term '" + termToModify.getTitle() + "' saved.", Toast.LENGTH_SHORT).show();
 
             dismiss();
             Intent intent = new Intent(v.getContext(), MainActivity.class);
