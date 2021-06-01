@@ -2,6 +2,7 @@ package com.example.termtracker.Dialogs;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.termtracker.Adapters.InstructorsRecyclerviewAdapter;
 import com.example.termtracker.Data.DatabaseHelper;
+import com.example.termtracker.Fragments.AddCourseFragment;
 import com.example.termtracker.MainActivity;
 import com.example.termtracker.Misc.DateTools;
 import com.example.termtracker.Listeners.OnInstructorDeleteButtonPressedListener;
@@ -56,15 +59,19 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
         courseToModify.setEndDate(parsedEndDate);
         courseToModify.setTermId(helper.getTermByName(term.getSelectedItem().toString()).getId());
 
-        if (courseToModify.isValidEdit(getContext()) && v.getId() == R.id.edit_course_save) {
+
+        if (v.getId() == R.id.add_new_instructor_button) {
+
+            showNewInstructorDialog();
+
+        } else if (courseToModify.isValidEdit(getContext()) && v.getId() == R.id.edit_course_save) {
             addNewItem();
 //            Toast.makeText(getContext(), "Modifications saved.", Toast.LENGTH_SHORT).show();
 //
 //            dismiss();
 //            Intent intent = new Intent(v.getContext(), MainActivity.class);
 //            startActivity(intent);
-        }
-        if (v.getId() == R.id.edit_course_cancel) {
+        } else if (v.getId() == R.id.edit_course_cancel) {
             dismiss();
         }
     }
@@ -152,6 +159,7 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
 
         save.setOnClickListener(this);
         cancel.setOnClickListener(this);
+        addInstructorButton.setOnClickListener(this);
 
     }
 
@@ -163,6 +171,14 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
         Toast.makeText(getActivity(), "Course Instructor " + newName + " added.", Toast.LENGTH_SHORT).show();
         adapter.notifyItemInserted(instructors.size() - 1);
     }
+
+    private void showNewInstructorDialog() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        InstructorDetailsDialogFragment instructorDetailsDialogFragment = InstructorDetailsDialogFragment.newInstance("New Instructor");
+        instructorDetailsDialogFragment.setTargetFragment(EditCourseDialogFragment.this, 300); //used by the dialog to reference this "parent" fragment.
+        instructorDetailsDialogFragment.show(fm, "instructor_details_dialog");
+    }
+
 
     @Override
     public void addNewItem() {
