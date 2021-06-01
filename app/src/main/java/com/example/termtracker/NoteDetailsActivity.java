@@ -17,10 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.termtracker.Data.DatabaseHelper;
+import com.example.termtracker.Dialogs.ConfirmationDialogFragment;
 import com.example.termtracker.Dialogs.ShareNotesDialogFragment;
 import com.example.termtracker.Model.Note;
 
-public class NoteDetailsActivity extends AppCompatActivity {
+public class NoteDetailsActivity extends AppCompatActivity implements ConfirmationDialogFragment.ConfirmationDialogFragmentListener {
 
     Note note;
 
@@ -98,12 +99,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.appbar_delete) {
-            Toast.makeText(getApplicationContext(), "delete", Toast.LENGTH_SHORT).show();
-            DatabaseHelper helper = new DatabaseHelper(this);
-            helper.deleteNote(note);
-            Toast.makeText(this, "Note Deleted.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            showNewConfirmationDialog();
             return true;
         }
         if (id == R.id.appbar_share) {
@@ -129,4 +125,24 @@ public class NoteDetailsActivity extends AppCompatActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
+
+    public void showNewConfirmationDialog() {
+        FragmentManager fm = this.getSupportFragmentManager();
+        ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Are you sure you want to delete this term?", "Confirm", "Cancel");
+        confirmationDialogFragment.show(fm, "note_delete_dialog");  //todo is this right?  not sure why I need this tag.
+    }
+    @Override
+    public void onConfirmDialogResolved(boolean result) {
+
+        if (result) {
+            DatabaseHelper helper = new DatabaseHelper(this);
+            helper.deleteNote(note);
+            Toast.makeText(this, "Note Deleted.", Toast.LENGTH_SHORT).show();
+
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
 }

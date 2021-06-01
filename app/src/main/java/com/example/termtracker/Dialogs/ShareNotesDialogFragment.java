@@ -62,12 +62,15 @@ public class ShareNotesDialogFragment extends DialogFragment implements View.OnC
         messageTextView.setText(message);
 
         sendButton.setOnClickListener(this);
+        cancelButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         emailString = emailEditText.getText().toString();
-        if (validEmail(emailString)) {
+        if (v.getId() == R.id.share_dialog_cancel_button) {
+            dismiss();
+        } else if (validEmail(emailString) && v.getId() == R.id.share_dialog_send_button) {
             sendEmail();
             Toast.makeText(getContext(), "Email sent to " + emailString, Toast.LENGTH_SHORT).show();
 

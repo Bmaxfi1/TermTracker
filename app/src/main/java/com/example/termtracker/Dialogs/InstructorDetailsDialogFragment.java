@@ -28,7 +28,10 @@ public class InstructorDetailsDialogFragment extends DialogFragment implements V
                 name.getText().toString(), phone.getText().toString(), email.getText().toString(), -1
         );
 
-        if (courseInstructor.isValid(getContext())) {
+        if (v.getId() == R.id.instructor_dialog_cancel_button) {
+            dismiss();
+        }
+        else if (courseInstructor.isValid(getContext())) {
 
             InstructorDetailsDialogFragmentListener listener = (InstructorDetailsDialogFragmentListener) getTargetFragment();
             listener.onSaveInstructor(name.getText().toString(), phone.getText().toString(), email.getText().toString());
@@ -73,6 +76,7 @@ public class InstructorDetailsDialogFragment extends DialogFragment implements V
         getDialog().setTitle(title);
 
         save.setOnClickListener(this);
+        cancel.setOnClickListener(this);
 
     }
 
