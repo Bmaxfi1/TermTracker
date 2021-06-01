@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:minWidth="300dp">
 
     <TextView
         android:id="@+id/confirmation_dialog_message"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginEnd="24dp"
         android:text="This is a test message just to see how the text behaves if it is full of a WHOLE lot of text.  I'm not sure if this message is going to get clipped on the sides of this layout, or if a new line will be created to fit the content of this text message."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,9 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
         android:text="Button"
-        app:layout_constraintEnd_toStartOf="@+id/confirmation_dialog_cancel_button"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirmation_dialog_message" />
 
@@ -33,12 +34,9 @@
         android:id="@+id/confirmation_dialog_cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
         android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/confirmation_dialog_confirm_button"
         app:layout_constraintTop_toBottomOf="@+id/confirmation_dialog_message" />
 </androidx.constraintlayout.widget.ConstraintLayout>

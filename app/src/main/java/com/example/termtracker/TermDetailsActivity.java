@@ -133,12 +133,20 @@ public class TermDetailsActivity extends AppCompatActivity implements Confirmati
             DatabaseHelper helper = new DatabaseHelper(this);
             List<Course> allCourses = helper.getAllCourses();
             int numOfCourses = 0;
+            boolean noCoursesInTerm = true;
             for (Course course: allCourses) {
-                if (course.getTermId() == term.getId() && !course.isCompleted()) {
-                    numOfCourses++;
+                if (course.getTermId() == term.getId()) {
+                    noCoursesInTerm = false;
+                    if (!course.isCompleted()) {
+                        numOfCourses++;
+                    }
                 }
             }
-            coursesLeft.setText(String.valueOf(numOfCourses));
+            if (noCoursesInTerm) {
+                coursesLeft.setText("N/A");
+            } else {
+                coursesLeft.setText(String.valueOf(numOfCourses));
+            }
         }
     }
     public void showNewConfirmationDialog() {

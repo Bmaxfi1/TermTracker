@@ -68,6 +68,32 @@ public class Term extends ScheduledItem implements Validatable {
                 Toast.makeText(context, "The term end date should not come before the term start date.", Toast.LENGTH_SHORT).show();
                 valid = false;
             }
+            //find out if edit would push course dates out of range
+            DatabaseHelper helper = new DatabaseHelper(context);
+            List<Course> allCourses = helper.getAllCourses();
+            boolean startDateClipped = false;
+            boolean endDateClipped = false;
+            for (Course course: allCourses) {
+                if (course.getTermId() == this.getId()) {
+                    if (Integer.parseInt(course.getStartDate()) < Integer.parseInt(this.getStartDate())) {
+                        startDateClipped = true;
+                        valid = false;
+                    }
+                    if (Integer.parseInt(course.getEndDate()) > Integer.parseInt(this.getEndDate())) {
+                        endDateClipped = true;
+                        valid = false;
+                    }
+                }
+                if (startDateClipped && endDateClipped) {
+                    break;
+                }
+            }
+            if (startDateClipped) {
+                Toast.makeText(context, "The term start date cannot come after any of the course start dates.", Toast.LENGTH_SHORT).show();
+            }
+            if (endDateClipped) {
+                Toast.makeText(context, "The term end date cannot come before any of the course end dates.", Toast.LENGTH_SHORT).show();
+            }
 
             return valid;
         }

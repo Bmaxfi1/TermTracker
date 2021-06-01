@@ -36,14 +36,15 @@
 
         <TextView
             android:id="@+id/term_details_courses_left_label"
-            android:layout_width="94dp"
-            android:layout_height="37dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="Assessments Left:"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Courses Left:"
             android:textAlignment="center"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/term_details_star"
+            app:layout_constraintHorizontal_bias="0.272"
+            app:layout_constraintStart_toStartOf="@+id/term_details_star"
             app:layout_constraintTop_toBottomOf="@+id/term_details_star" />
 
         <TextView
@@ -59,7 +60,7 @@
 
         <TextView
             android:id="@+id/term_details_title"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
@@ -92,21 +93,20 @@
 
         <TextView
             android:id="@+id/term_details_courses_left"
-            android:layout_width="52dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="36dp"
             android:text="-1"
             android:textSize="28sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/term_details_courses_left_label"
+            app:layout_constraintStart_toStartOf="@+id/term_details_courses_left_label"
             app:layout_constraintTop_toBottomOf="@+id/term_details_courses_left_label" />
 
         <TextView
             android:id="@+id/textView37"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="68dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="36dp"
             android:text="Courses"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -114,10 +114,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/term_details_courses_rv"
-            android:layout_width="363dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView37" />
 

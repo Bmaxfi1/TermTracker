@@ -106,6 +106,32 @@ public class Course extends ScheduledItem implements Validatable {
                 valid = false;
             }
 
+            //find out if edit would push assessment dates out of range
+            List<Assessment> allAssessments = helper.getAllAssessments();
+            boolean startDateClipped = false;
+            boolean endDateClipped = false;
+            for (Assessment assessment: allAssessments) {
+                if (assessment.getCourseId() == this.getId()) {
+                    if (Integer.parseInt(assessment.getStartDate()) < Integer.parseInt(this.getStartDate())) {
+                        startDateClipped = true;
+                        valid = false;
+                    }
+                    if (Integer.parseInt(assessment.getEndDate()) > Integer.parseInt(this.getEndDate())) {
+                        endDateClipped = true;
+                        valid = false;
+                    }
+                }
+                if (startDateClipped && endDateClipped) {
+                    break;
+                }
+            }
+            if (startDateClipped) {
+                Toast.makeText(context, "The course start date cannot come after any of the assessment start dates.", Toast.LENGTH_SHORT).show();
+            }
+            if (endDateClipped) {
+                Toast.makeText(context, "The course end date cannot come before any of the assessment end dates.", Toast.LENGTH_SHORT).show();
+            }
+
             return valid;
         }
         return false;

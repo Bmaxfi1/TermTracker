@@ -301,6 +301,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COURSES_COL_TERM_ID, course.getTermId());
 
         long id = db.insert(TABLE_COURSES, null, values);
+        checkAndUpdateTermCompleteStatus(getTermById(course.getTermId()));
         return id;
     }
 
@@ -398,6 +399,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(ASSESSMENTS_COL_COURSE_ID, assessment.getCourseId());
 
         long id = db.insert(TABLE_ASSESSMENTS, null, values);
+        checkAndUpdateCourseCompleteStatus(getCourseById((int) assessment.getCourseId()));
         return id;
     }
 
@@ -471,19 +473,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_NOTES, "_id = ?", new String[]{String.valueOf(note.getId())});
 
         return note.getId();
-    }
-
-    public long updateInstructor(CourseInstructor instructor) {
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(INSTRUCTORS_COL_NAME, instructor.getName());
-        values.put(INSTRUCTORS_COL_PHONE, instructor.getPhone());
-        values.put(INSTRUCTORS_COL_EMAIL, instructor.getEmail());
-
-        db.update(TABLE_INSTRUCTORS, values, "_id = ?", new String[]{String.valueOf(instructor.getId())});
-
-        return instructor.getId();
     }
 
     public long deleteAssessment(Assessment assessment) {

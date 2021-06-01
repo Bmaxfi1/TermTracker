@@ -193,12 +193,20 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
             DatabaseHelper helper = new DatabaseHelper(this);
             List<Assessment> allAssessments = helper.getAllAssessments();
             int numOfAssessments = 0;
+            boolean noAssessmentsInCourse = true;
             for (Assessment assessment: allAssessments) {
-                if (assessment.getCourseId() == course.getId() && !assessment.isCompleted()) {
-                    numOfAssessments++;
+                if (assessment.getCourseId() == course.getId()) {
+                    noAssessmentsInCourse = false;
+                    if (!assessment.isCompleted()) {
+                        numOfAssessments++;
+                    }
                 }
             }
-            courseAssessmentsLeft.setText(String.valueOf(numOfAssessments));
+            if (noAssessmentsInCourse) {
+                courseAssessmentsLeft.setText("N/A");
+            } else {
+                courseAssessmentsLeft.setText(String.valueOf(numOfAssessments));
+            }
         }
     }
 
