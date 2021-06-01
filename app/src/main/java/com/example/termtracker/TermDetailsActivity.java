@@ -152,7 +152,7 @@ public class TermDetailsActivity extends AppCompatActivity implements Confirmati
     public void showNewConfirmationDialog() {
         FragmentManager fm = this.getSupportFragmentManager();
         ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Are you sure you want to delete this term?", "Confirm", "Cancel");
-        confirmationDialogFragment.show(fm, "term_delete_dialog");  //todo is this right?  not sure why I need this tag.
+        confirmationDialogFragment.show(fm, "term_delete_dialog");
     }
 
     @Override
@@ -172,6 +172,6 @@ public class TermDetailsActivity extends AppCompatActivity implements Confirmati
     public void showNewEditDialog() {
         FragmentManager fm = this.getSupportFragmentManager();
         EditTermDialogFragment editTermDialogFragment = EditTermDialogFragment.newInstance(String.valueOf(term.getId()));
-        editTermDialogFragment.show(fm, "edit_term_dialog");  //todo not sure what the tag is for.
+        editTermDialogFragment.show(fm, "edit_term_dialog");
     }
 }

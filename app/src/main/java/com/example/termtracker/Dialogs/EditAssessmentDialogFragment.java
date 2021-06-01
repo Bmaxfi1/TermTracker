@@ -54,19 +54,6 @@ public class EditAssessmentDialogFragment extends DialogFragment implements View
             long idReturned = helper.updateAssessment(assessmentToModify);
             Toast.makeText(getContext(), "Modifications to assessment '" + assessmentToModify.getTitle() + "' saved.", Toast.LENGTH_SHORT).show();
 
-
-
-
-//          todo do I actually need this? probably gonna just delete it after testing.
-
-//            EditAssessmentDialogFragment.EditAssessmentDialogFragmentListener listener = new EditAssessmentDialogFragmentListener() {
-//                @Override
-//                public void onSaveAssessment(String newTitle, String newType, String newStart, String newEnd, String courseId) {
-//
-//                }
-//            listener.onSaveAssessment(title.getText().toString(), type.getSelectedItem().toString(), start.getText().toString(), end.getText().toString(), coursePicker.getSelectedItem().toString() );
-//            };
-//
             dismiss();
             Intent intent = new Intent(v.getContext(), MainActivity.class);
             startActivity(intent);

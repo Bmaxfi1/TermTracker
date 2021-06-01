@@ -139,7 +139,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity implements Conf
     private void showNewConfirmationDialog() {
         FragmentManager fm = this.getSupportFragmentManager();
         ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Are you sure you want to delete this assessment?", "Confirm", "Cancel");
-        confirmationDialogFragment.show(fm, "delete_assessment_dialog"); //todo see if this tag is right.  used to be "edit_assessment_dialog"
+        confirmationDialogFragment.show(fm, "delete_assessment_dialog");
     }
 
 

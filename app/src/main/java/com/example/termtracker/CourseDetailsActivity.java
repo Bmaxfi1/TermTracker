@@ -213,13 +213,13 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
     public void showNewEditDialog() {
         FragmentManager fm = this.getSupportFragmentManager();
         EditCourseDialogFragment editCourseDialogFragment = EditCourseDialogFragment.newInstance(String.valueOf(course.getId()));
-        editCourseDialogFragment.show(fm, "edit_course_dialog"); //todo what is this tag for??
+        editCourseDialogFragment.show(fm, "edit_course_dialog");
     }
 
     public void showNewConfirmationDialog() {
         FragmentManager fm = this.getSupportFragmentManager();
         ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Are you sure you want to delete this course and all associated instructors, assessments, and notes?", "Confirm", "Cancel");
-        confirmationDialogFragment.show(fm, "edit_course_dialog");  //todo what tag should go here, and for what purpose?
+        confirmationDialogFragment.show(fm, "edit_course_dialog");
     }
 
     @Override
@@ -251,6 +251,6 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
         ShareNotesDialogFragment shareNotesDialogFragment = ShareNotesDialogFragment.newInstance(
                 "Enter the email of the person you would like to send all notes for course '" +
                         course.getTitle() +"' to.", allNotesInThisCourseAsString.toString());
-        shareNotesDialogFragment.show(fm, "share_notes_dialog");//todo unnecessary?
+        shareNotesDialogFragment.show(fm, "share_notes_dialog");
     }
 }

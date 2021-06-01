@@ -108,7 +108,7 @@ public class NoteDetailsActivity extends AppCompatActivity implements Confirmati
             ShareNotesDialogFragment shareNotesDialogFragment = ShareNotesDialogFragment.newInstance(
                     "Enter the email of the person you would like to send '" +
                             noteTitle.getText().toString() + "' to.", noteTitle.getText().toString() + "\n" +noteContent.getText().toString());
-            shareNotesDialogFragment.show(fm, "share_notes_dialog");//todo unnecessary tag?
+            shareNotesDialogFragment.show(fm, "share_notes_dialog");
             return true;
         }
         if (id == R.id.home) {
@@ -129,7 +129,7 @@ public class NoteDetailsActivity extends AppCompatActivity implements Confirmati
     public void showNewConfirmationDialog() {
         FragmentManager fm = this.getSupportFragmentManager();
         ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Are you sure you want to delete this note?", "Confirm", "Cancel");
-        confirmationDialogFragment.show(fm, "note_delete_dialog");  //todo is this right?  not sure why I need this tag.
+        confirmationDialogFragment.show(fm, "note_delete_dialog");
     }
     @Override
     public void onConfirmDialogResolved(boolean result) {
