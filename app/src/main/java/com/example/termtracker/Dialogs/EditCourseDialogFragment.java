@@ -56,13 +56,16 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
         courseToModify.setEndDate(parsedEndDate);
         courseToModify.setTermId(helper.getTermByName(term.getSelectedItem().toString()).getId());
 
-        if (courseToModify.isValidEdit(getContext())) {
+        if (courseToModify.isValidEdit(getContext()) && v.getId() == R.id.edit_course_save) {
             addNewItem();
 //            Toast.makeText(getContext(), "Modifications saved.", Toast.LENGTH_SHORT).show();
 //
 //            dismiss();
 //            Intent intent = new Intent(v.getContext(), MainActivity.class);
 //            startActivity(intent);
+        }
+        if (v.getId() == R.id.edit_course_cancel) {
+            dismiss();
         }
     }
 
@@ -148,6 +151,7 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
         cancel.setVisibility(View.VISIBLE);
 
         save.setOnClickListener(this);
+        cancel.setOnClickListener(this);
 
     }
 

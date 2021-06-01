@@ -22,6 +22,7 @@ import com.example.termtracker.Adapters.NotesRecyclerViewAdapter;
 import com.example.termtracker.Data.DatabaseHelper;
 import com.example.termtracker.Dialogs.EditCourseDialogFragment;
 import com.example.termtracker.Dialogs.ConfirmationDialogFragment;
+import com.example.termtracker.Dialogs.ShareNotesDialogFragment;
 import com.example.termtracker.Misc.DateTools;
 import com.example.termtracker.Listeners.OnAssessmentClickListener;
 import com.example.termtracker.Listeners.OnNoteClickListener;
@@ -228,7 +229,22 @@ public class CourseDetailsActivity extends AppCompatActivity implements Confirma
     }
 
     public void showNewShareNotesDialog() {
+        Toast.makeText(getApplicationContext(), "share", Toast.LENGTH_SHORT).show();
+
+        DatabaseHelper helper = new DatabaseHelper(this);
+        List<Note> allNotes = helper.getAllNotes();
+        StringBuilder allNotesInThisCourseAsString = new StringBuilder();
+        for (Note note: allNotes) {
+            if (note.getCourseId() == course.getId()) {
+                allNotesInThisCourseAsString.append(note.getTitle()).append("\n").append(note.getContent()).append("\n\n");
+            }
+        }
+
+
         FragmentManager fm = this.getSupportFragmentManager();
-        //todo
+        ShareNotesDialogFragment shareNotesDialogFragment = ShareNotesDialogFragment.newInstance(
+                "Enter the email of the person you would like to send all notes for course '" +
+                        course.getTitle() +"' to.", allNotesInThisCourseAsString.toString());
+        shareNotesDialogFragment.show(fm, "share_notes_dialog");//todo unnecessary?
     }
 }

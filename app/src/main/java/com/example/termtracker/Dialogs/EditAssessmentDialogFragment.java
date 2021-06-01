@@ -50,9 +50,12 @@ public class EditAssessmentDialogFragment extends DialogFragment implements View
         assessmentToModify.setAssessmentType(AssessmentType.get(type.getSelectedItem().toString()));
         assessmentToModify.setCourseId(helper.getCourseByName(coursePicker.getSelectedItem().toString()).getId());
 
-        if (assessmentToModify.isValid(getContext())) {
+        if (assessmentToModify.isValid(getContext()) && v.getId() == R.id.assessment_save_button) {
             long idReturned = helper.updateAssessment(assessmentToModify);
             Toast.makeText(getContext(), "Modifications to Appointment #" + idReturned + " saved.", Toast.LENGTH_SHORT).show();
+
+
+
 
 //          todo do I actually need this? probably gonna just delete it after testing.
 
@@ -68,6 +71,9 @@ public class EditAssessmentDialogFragment extends DialogFragment implements View
             Intent intent = new Intent(v.getContext(), MainActivity.class);
             startActivity(intent);
 
+        }
+        if (v.getId() == R.id.assessment_cancel_button) {
+            dismiss();
         }
 
     }
@@ -152,6 +158,7 @@ public class EditAssessmentDialogFragment extends DialogFragment implements View
         cancel.setVisibility(View.VISIBLE);
 
         save.setOnClickListener(this);
+        cancel.setOnClickListener(this);
 
     }
 

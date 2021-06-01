@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.termtracker.Data.DatabaseHelper;
+import com.example.termtracker.Dialogs.ShareNotesDialogFragment;
 import com.example.termtracker.Model.Note;
 
 public class NoteDetailsActivity extends AppCompatActivity {
@@ -106,6 +108,11 @@ public class NoteDetailsActivity extends AppCompatActivity {
         }
         if (id == R.id.appbar_share) {
             Toast.makeText(getApplicationContext(), "share", Toast.LENGTH_SHORT).show();
+            FragmentManager fm = this.getSupportFragmentManager();
+            ShareNotesDialogFragment shareNotesDialogFragment = ShareNotesDialogFragment.newInstance(
+                    "Enter the email of the person you would like to send '" +
+                            noteTitle.getText().toString() + "' to.", noteTitle.getText().toString() + "\n" +noteContent.getText().toString());
+            shareNotesDialogFragment.show(fm, "share_notes_dialog");//todo unnecessary tag?
             return true;
         }
         if (id == R.id.home) {

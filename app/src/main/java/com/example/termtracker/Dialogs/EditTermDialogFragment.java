@@ -36,13 +36,16 @@ public class EditTermDialogFragment extends DialogFragment implements View.OnCli
         termToModify.setStartDate(parsedStartDate);
         termToModify.setEndDate(parsedEndDate);
 
-        if (termToModify.isValidEdit(getContext())) {
+        if (termToModify.isValidEdit(getContext()) && v.getId() == R.id.edit_term_save) {
             long idReturned = helper.updateTerm(termToModify);
             Toast.makeText(getContext(), "Modifications to Term #" + idReturned + " saved.", Toast.LENGTH_SHORT).show();
 
             dismiss();
             Intent intent = new Intent(v.getContext(), MainActivity.class);
             startActivity(intent);
+        }
+        if (v.getId() == R.id.edit_term_cancel) {
+            dismiss();
         }
     }
 
@@ -88,6 +91,7 @@ public class EditTermDialogFragment extends DialogFragment implements View.OnCli
         cancel.setVisibility(View.VISIBLE);
 
         save.setOnClickListener(this);
+        cancel.setOnClickListener(this);
 
     }
 }
