@@ -128,7 +128,7 @@ public class NoteDetailsActivity extends AppCompatActivity implements Confirmati
 
     public void showNewConfirmationDialog() {
         FragmentManager fm = this.getSupportFragmentManager();
-        ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Are you sure you want to delete this term?", "Confirm", "Cancel");
+        ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Are you sure you want to delete this note?", "Confirm", "Cancel");
         confirmationDialogFragment.show(fm, "note_delete_dialog");  //todo is this right?  not sure why I need this tag.
     }
     @Override

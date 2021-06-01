@@ -66,18 +66,22 @@ public class AddActivity extends AppCompatActivity {
             Intent intent = new Intent(this, AddDetailsActivity.class);
             intent.putExtra("type", "note");
             startActivity(intent);
+            finish();
         } else if (view == findViewById(R.id.add_assessment_button) && !noCoursesYet) {
             Intent intent = new Intent(this, AddDetailsActivity.class);
             intent.putExtra("type", "assessment");
             startActivity(intent);
+            finish();
         } else if (view == findViewById(R.id.add_course_button) && !noTermsYet) {
             Intent intent = new Intent(this, AddDetailsActivity.class);
             intent.putExtra("type", "course");
             startActivity(intent);
+            finish();
         } else if (view == findViewById(R.id.add_term_button)) {
             Intent intent = new Intent(this, AddDetailsActivity.class);
             intent.putExtra("type", "term");
             startActivity(intent);
+            finish();
         } else if (noCoursesYet && noTermsYet) {
             Toast.makeText(this, "You'll need to add a term first!", Toast.LENGTH_SHORT).show();
         } else if (noCoursesYet) {

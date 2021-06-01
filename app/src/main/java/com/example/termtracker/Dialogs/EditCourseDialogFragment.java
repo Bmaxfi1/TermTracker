@@ -61,16 +61,11 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
 
 
         if (v.getId() == R.id.add_new_instructor_button) {
-
             showNewInstructorDialog();
 
         } else if (courseToModify.isValidEdit(getContext()) && v.getId() == R.id.edit_course_save) {
             addNewItem();
-//            Toast.makeText(getContext(), "Modifications saved.", Toast.LENGTH_SHORT).show();
-//
-//            dismiss();
-//            Intent intent = new Intent(v.getContext(), MainActivity.class);
-//            startActivity(intent);
+
         } else if (v.getId() == R.id.edit_course_cancel) {
             dismiss();
         }
@@ -198,7 +193,7 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
                 titleEditText.getText().toString(),
                 parsedStartDate,
                 parsedEndDate,
-                false,
+                courseToModify.isCompleted(),
                 true,
                 term.getId());
         if (courseToEdit.isValidEdit(getContext())) {
@@ -229,6 +224,7 @@ public class EditCourseDialogFragment extends DialogFragment implements View.OnC
                 }
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         }
     }

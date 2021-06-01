@@ -69,6 +69,8 @@ public class AddTermFragment extends Fragment implements CanBeAddedToDatabase {
                 Toast.makeText(view.getContext(), "Term Added.  Title: " + termToAdd.getTitle(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
+
             }
         }
 

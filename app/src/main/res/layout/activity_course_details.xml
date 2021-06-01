@@ -24,7 +24,7 @@
         <TextView
             android:id="@+id/course_details_assessments_left_label"
             android:layout_width="95dp"
-            android:layout_height="41dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Assessments Left:"
             android:textAlignment="center"

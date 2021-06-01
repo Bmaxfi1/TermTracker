@@ -70,6 +70,8 @@ public class EditAssessmentDialogFragment extends DialogFragment implements View
             dismiss();
             Intent intent = new Intent(v.getContext(), MainActivity.class);
             startActivity(intent);
+            getActivity().finish();
+
 
         }
         if (v.getId() == R.id.assessment_cancel_button) {

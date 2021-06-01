@@ -83,6 +83,8 @@ public class AddNoteFragment extends Fragment implements CanBeAddedToDatabase {
                 Toast.makeText(view.getContext(), "Note Added.  Title: " + noteToAdd.getTitle(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
+
             }
         }
     }

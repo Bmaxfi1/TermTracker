@@ -113,6 +113,8 @@ public class AddAssessmentFragment extends Fragment implements CanBeAddedToDatab
                 Toast.makeText(view.getContext(), "Assessment added.  Title: " + assessmentToAdd.getTitle(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
+
             }
         }
     }
