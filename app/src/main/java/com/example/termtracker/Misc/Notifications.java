@@ -14,14 +14,9 @@ import com.example.termtracker.R;
 
 public class Notifications {
 
-    public static final String CHANNEL_ID = "MyNotificationChannel";
-
-
-
+    public static final String CHANNEL_ID = "Date Reminders";
 
     public static void makeNotification(Context context, String title, String message) {
-
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_school_24)
                 .setContentTitle(title)
@@ -40,24 +35,4 @@ public class Notifications {
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         notificationManagerCompat.notify(0, builder.build());
     }
-
-    //    //This is how the notification channel gets created.  It's safe to call this multiple times
-//    //because if a notification channel already exists, this does nothing.
-//    private void createNotificationChannel() {
-//        // Create the NotificationChannel, but only on API 26+ because
-//        // the NotificationChannel class is new and not in the support library
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            CharSequence name = "myChannel";
-//            String description = "my channel description";
-//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-//            channel.setDescription(description);
-//            // Register the channel with the system; you can't change the importance
-//            // or other notification behaviors after this
-//            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-//            notificationManager.createNotificationChannel(channel);
-//        }
-//    }
-
-
 }

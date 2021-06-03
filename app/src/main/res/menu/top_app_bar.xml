@@ -3,6 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/appbar_notifications"
+        android:icon="@drawable/ic_baseline_notifications_24"
+        android:title="Notifications"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/appbar_add"
         android:icon="@drawable/ic_baseline_add_24"
         android:title="Add"

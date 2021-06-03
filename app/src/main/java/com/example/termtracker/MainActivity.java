@@ -13,8 +13,10 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.termtracker.Dialogs.ConfirmationDialogFragment;
 import com.example.termtracker.Fragments.AssessmentsFragment;
 import com.example.termtracker.Fragments.CoursesFragment;
 import com.example.termtracker.Fragments.TermsFragment;
@@ -34,7 +36,7 @@ import java.util.Date;
  */
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ConfirmationDialogFragment.ConfirmationDialogFragmentListener {
 
 
     private static final String CHANNEL_ID = "MyNotificationChannel";
@@ -61,10 +63,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         createNotificationChannel();
         setupNotifications();
-
     }
 
     //changes the fragment that is on display
@@ -94,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
             launchAddActivity();
             return true;
         }
+        if (id == R.id.appbar_notifications) {
+            showNotificationDialog();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -107,11 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 getSupportActionBar();
                 switch (item.getItemId()) {
-//                    case R.id.nav_home:
-//                        fragment = new HomeFragment();
-//                        setCurrentFragment(fragment);
-//                        getSupportActionBar().setTitle("TermTracker");
-//                        return true;
+
                     case R.id.nav_terms:
                         fragment = new TermsFragment();
                         setCurrentFragment(fragment);
@@ -132,8 +133,8 @@ public class MainActivity extends AppCompatActivity {
     public void setupNotifications(){
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 10);
-        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 11);
+        calendar.set(Calendar.MINUTE, 25);
         calendar.set(Calendar.SECOND, 0);
 
         if (calendar.getTime().compareTo(new Date()) < 0)
@@ -145,9 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (alarmManager != null) {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
         }
-
     }
 
     private void createNotificationChannel() {
@@ -155,12 +154,35 @@ public class MainActivity extends AppCompatActivity {
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "myChannelName", importance);
-            channel.setDescription("myChannelDescription");
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Date Reminders", importance);
+            channel.setDescription("This channel is for displaying alerts to the user indicating whether or not there are" +
+                    " dates of importance today.  Alerts happen at approximately 10:00 am system time.");
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void showNotificationDialog() {
+        FragmentManager fm = this.getSupportFragmentManager();
+        ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance(
+                "By default, this app sends notifications every day at 10:00 that will inform you of whether or not there is a course or assessment start or end date.",
+                "Change Settings",
+                "Cancel");
+        confirmationDialogFragment.show(fm, "notification_confirmation_dialog");
+    }
+
+    @Override
+    public void onConfirmDialogResolved(boolean result) {
+        if (result) {
+            Intent intent = new Intent();
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            intent.putExtra("app_package", getPackageName());
+            intent.putExtra("app_uid", getApplicationInfo().uid);
+            intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
+
+            startActivity(intent);
         }
     }
 }

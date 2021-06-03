@@ -27,8 +27,6 @@ public class Receiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent i) {
 
-
-
         //get today's date and format it to match how it is stored in the database
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
@@ -68,6 +66,8 @@ public class Receiver extends BroadcastReceiver {
 
         if (datesToday > 1) {
             Notifications.makeNotification(context, "Multiple important dates today", "Check the app and look for key start/end dates.");
+        } else if (datesToday == 0) {
+            Notifications.makeNotification(context, "No important dates today", "We'll check again for you tomorrow!");
         }
 
 
