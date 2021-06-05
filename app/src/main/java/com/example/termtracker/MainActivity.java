@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity implements ConfirmationDialo
     public void setupNotifications(){
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 11);
-        calendar.set(Calendar.MINUTE, 25);
+        calendar.set(Calendar.HOUR_OF_DAY, 10);
+        calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
 
         if (calendar.getTime().compareTo(new Date()) < 0)
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements ConfirmationDialo
     private void showNotificationDialog() {
         FragmentManager fm = this.getSupportFragmentManager();
         ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance(
-                "By default, this app sends notifications every day at 10:00 that will inform you of whether or not there is a course or assessment start or end date.",
+                "By default, this app sends notifications every day at 10:00 am that will inform you of whether or not there is a course or assessment start or end date.",
                 "Change Settings",
                 "Cancel");
         confirmationDialogFragment.show(fm, "notification_confirmation_dialog");
