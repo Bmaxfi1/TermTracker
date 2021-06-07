@@ -27,60 +27,61 @@ public class Receiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent i) {
 
-        //get today's date and format it to match how it is stored in the database
-        Date today = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        String formattedToday = format.format(today);
 
-        //check to see if there is an important date today
-        DatabaseHelper helper = new DatabaseHelper(context);
-        List<Course> allCourses = helper.getAllCourses();
-        List<Assessment> allAssessments = helper.getAllAssessments();
-        int datesToday = 0;
-        if (allCourses != null) {
-            for (Course course: allCourses) {
-                if (course.getStartDate().equals(formattedToday)) {
-                    Notifications.makeNotification(context, "Course starts today", course.getTitle() + " is starting today.");
-                    datesToday++;
-                }
-                if (course.getEndDate().equals(formattedToday)) {
-                    Notifications.makeNotification(context, "Course ends today", course.getTitle() + " is ending today.");
-                    datesToday++;
-                }
-            }
-        }
-        if (allAssessments != null) {
-            for (Assessment assessment: allAssessments) {
-                boolean thisAssessmentStartsToday = false;  //notifying of the end date is useless if the assessment end date is the same as the start date.
-                if (assessment.getStartDate().equals(formattedToday)) {
-                    thisAssessmentStartsToday = true;
-                    Notifications.makeNotification(context, "Assessment starts today", assessment.getTitle() + " is starting today.");
-                    datesToday++;
-                }
-                if (assessment.getEndDate().equals(formattedToday) && !thisAssessmentStartsToday) {
-                    Notifications.makeNotification(context, "Assessment ends today", assessment.getTitle() + " is starting today.");
-                    datesToday++;
+
+            //get today's date and format it to match how it is stored in the database
+            Date today = Calendar.getInstance().getTime();
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            String formattedToday = format.format(today);
+
+            //check to see if there is an important date today
+            DatabaseHelper helper = new DatabaseHelper(context);
+            List<Course> allCourses = helper.getAllCourses();
+            List<Assessment> allAssessments = helper.getAllAssessments();
+            int datesToday = 0;
+            if (allCourses != null) {
+                for (Course course : allCourses) {
+                    if (course.getStartDate().equals(formattedToday)) {
+                        Notifications.makeNotification(context, "Course starts today", course.getTitle() + " is starting today.");
+                        datesToday++;
+                    }
+                    if (course.getEndDate().equals(formattedToday)) {
+                        Notifications.makeNotification(context, "Course ends today", course.getTitle() + " is ending today.");
+                        datesToday++;
+                    }
                 }
             }
-        }
+            if (allAssessments != null) {
+                for (Assessment assessment : allAssessments) {
+                    boolean thisAssessmentStartsToday = false;  //notifying of the end date is useless if the assessment end date is the same as the start date.
+                    if (assessment.getStartDate().equals(formattedToday)) {
+                        thisAssessmentStartsToday = true;
+                        Notifications.makeNotification(context, "Assessment starts today", assessment.getTitle() + " is starting today.");
+                        datesToday++;
+                    }
+                    if (assessment.getEndDate().equals(formattedToday) && !thisAssessmentStartsToday) {
+                        Notifications.makeNotification(context, "Assessment ends today", assessment.getTitle() + " is starting today.");
+                        datesToday++;
+                    }
+                }
+            }
 
-        if (datesToday > 1) {
-            Notifications.makeNotification(context, "Multiple important dates today", "Check the app and look for key start/end dates.");
-        } else if (datesToday == 0) {
-            Notifications.makeNotification(context, "No important dates today", "We'll check again for you tomorrow!");
-        }
+            if (datesToday > 1) {
+                Notifications.makeNotification(context, "Multiple important dates today", "Check the app and look for key start/end dates.");
+            } else if (datesToday == 0) {
+                Notifications.makeNotification(context, "No important dates today", "We'll check again for you tomorrow!");
+            }
 
-
-        //garbage, need to update
-        Bundle bundle = i.getExtras();
-        String title = bundle.getString("title");
-        String message = bundle.getString("message");
-
-        Log.d("superdopetag", "receiver got intent");
-        Log.d("superdopetag", formattedToday);
-        Log.d("superdopetag", allAssessments.get(0).getStartDate());
+//            //garbage, need to update
+//            Bundle bundle = i.getExtras();
+//            String title = bundle.getString("title");
+//            String message = bundle.getString("message");
+//
+//            Log.d("superdopetag", "receiver got intent");
+//            Log.d("superdopetag", formattedToday);
+//            Log.d("superdopetag", allAssessments.get(0).getStartDate());
 
 //        Notifications.makeNotification(context, "title", "message");
 //        Notifications.makeNotification(context, "title", "message2:the sequel");
-    }
+        }
 }

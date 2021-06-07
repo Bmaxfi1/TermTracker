@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -39,11 +40,13 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity implements ConfirmationDialogFragment.ConfirmationDialogFragmentListener {
 
 
-    private static final String CHANNEL_ID = "MyNotificationChannel";
+    private static final String CHANNEL_ID = "Date Reminders";
 
 
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
+
+
 
     @Override
     public void onBackPressed() {
@@ -137,8 +140,9 @@ public class MainActivity extends AppCompatActivity implements ConfirmationDialo
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
 
-        if (calendar.getTime().compareTo(new Date()) < 0)
+        if (calendar.getTime().compareTo(new Date()) < 0) {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
 
         Intent intent = new Intent(getApplicationContext(), Receiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -146,6 +150,8 @@ public class MainActivity extends AppCompatActivity implements ConfirmationDialo
 
         if (alarmManager != null) {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        } else {
+            Toast.makeText(this, "Something went wrong while setting up notifications.", Toast.LENGTH_SHORT).show();
         }
     }
 
